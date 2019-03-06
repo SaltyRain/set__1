@@ -43,6 +43,7 @@ namespace binaryMassiv
         int *arr; //бинарный массив
         
         void assignBorders(int border1, int border2); //присвоить правильно границы
+        int countRange(); //высчитывает диапазон
     };
     
     set empty_set; //фиктивное пустое множество, ссылка которого будет возвращаться после вызова функции find, результатом которого будет пустое множество
@@ -66,12 +67,28 @@ namespace binaryMassiv
         }
     }
     
+    int binaryMassiv:: set:: countRange()
+    {
+        int rng = abs(left_border + right_border);
+        //  если сумма по модулю равна сумме без модуля
+        if (rng == left_border + right_border)
+            rng = rng + 1; //добавляем ноль
+        return rng;
+    }
+    
     binaryMassiv:: set:: set(int border1, int border2)
     {
         assignBorders(border1, border2);
-        int range = abs(border1 - border2);
+        int range = countRange();
         arr = new int[range];
     }
+    
+    binaryMassiv:: set:: ~set()
+    {
+        
+    }
+    
+    
 }
 
 namespace circleList {
@@ -97,3 +114,8 @@ int main(int argc, const char * argv[]) {
     std::cout << "Hello, World!\n";
     return 0;
 }
+
+
+
+//        if ((left_border < 0 && right_border < 0) || (left_border > 0 && right_border > 0))
+//        if ((left_border < 0 && right_border > 0) || (left_border > 0 && right_border < 0))
