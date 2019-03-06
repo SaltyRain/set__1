@@ -81,12 +81,17 @@ namespace binaryMassiv
         assignBorders(border1, border2);
         int range = countRange();
         arr = new int[range];
+        // заполнение массива нулями
+        for (int i = 0; i < range; i++)
+            arr[i] = 0;
     }
     
     binaryMassiv:: set:: ~set()
     {
         
     }
+    
+    
     
     
 }
