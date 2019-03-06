@@ -44,7 +44,9 @@ namespace binaryMassiv
         
         void assignBorders(int border1, int border2); //присвоить правильно границы
         int countRange(); //высчитывает диапазон
-        int converting(int x); //преобразование числа x в номер элемента массива
+        
+        int convertToNumber(int x); //преобразование числа x в номер элемента массива
+        int convertToValue(int number); //преобразование номера элемента массива в значение x
     };
     
     set empty_set; //фиктивное пустое множество, ссылка которого будет возвращаться после вызова функции find, результатом которого будет пустое множество
@@ -93,7 +95,11 @@ namespace binaryMassiv
         
     }
     
-    int binaryMassiv:: set:: converting(int x)
+    int binaryMassiv:: set:: convertToNumber(int x)
+    {
+        return 0;
+    }
+    int binaryMassiv:: set:: convertToValue(int number)
     {
         return 0;
     }
@@ -101,18 +107,31 @@ namespace binaryMassiv
     void binaryMassiv:: set:: insert(int x)
     {
         //сперва x нужно преобразовать в значение
-        int item_number = converting(x);
+        int item_number = convertToNumber(x);
         if (arr[item_number] != 1) //если такого элемента еще нет в множестве
             arr[item_number] = 1; //добавить
     }
-    
     void binaryMassiv:: set:: del(int x)
     {
-        int item_number = converting(x);
+        int item_number = convertToNumber(x);
         if (arr[item_number] != 0) //если такой элемент есть
             arr[item_number] = 0; //удалить
     }
     
+    int binaryMassiv:: set:: min()
+    {
+        int minNumber = 0; //минимальное значение в виде номера массива
+        //.. вычисление
+        int value = convertToValue(minNumber);
+        return value;
+    }
+    int binaryMassiv:: set:: max()
+    {
+        int maxNumber = 0; //минимальное значение в виде номера массива
+        //.. вычисление
+        int value = convertToValue(maxNumber);
+        return value;
+    }
     
 }
 
