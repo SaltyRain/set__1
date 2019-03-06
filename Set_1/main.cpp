@@ -8,6 +8,33 @@
 
 #include <iostream>
 
+namespace binaryMassiv {
+    class set {
+    public:
+        
+    private:
+        
+    };
+}
+
+namespace circleList {
+    class set {
+    public:
+        
+    private:
+        
+    };
+}
+
+namespace linkedList {
+    class set {
+    public:
+        
+    private:
+        
+    };
+}
+
 int main(int argc, const char * argv[]) {
     // insert code here...
     std::cout << "Hello, World!\n";
