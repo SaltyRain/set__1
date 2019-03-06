@@ -7,9 +7,12 @@
 //
 
 #include <iostream>
+#include <math.h>
 
-namespace binaryMassiv {
-    class set {
+namespace binaryMassiv
+{
+    class set
+    {
     public:
         set();
         set(int border1, int border2);
@@ -37,12 +40,38 @@ namespace binaryMassiv {
     private:
         int left_border; //нижняя граница диапазона
         int right_border; //верхняя граница диапазона
-        int arr[]; //бинарный массив
+        int *arr; //бинарный массив
+        
+        void assignBorders(int border1, int border2); //присвоить правильно границы
     };
     
     set empty_set; //фиктивное пустое множество, ссылка которого будет возвращаться после вызова функции find, результатом которого будет пустое множество
     
+    binaryMassiv:: set:: set()
+    {
+        
+    }
     
+    void binaryMassiv:: set:: assignBorders(int border1, int border2)
+    {
+        if (border1 <= border2)
+        {
+            left_border = border1;
+            right_border = border2;
+        }
+        else
+        {
+            left_border = border2;
+            right_border = border1;
+        }
+    }
+    
+    binaryMassiv:: set:: set(int border1, int border2)
+    {
+        assignBorders(border1, border2);
+        int range = abs(border1 - border2);
+        arr = new int[range];
+    }
 }
 
 namespace circleList {
