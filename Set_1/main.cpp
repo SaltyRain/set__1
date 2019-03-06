@@ -34,7 +34,7 @@ namespace binaryMassiv
         bool equal(set b); //эквивалентность множеств
         bool member(int x); //принадлежность элемента x множеству
         bool empty(); //проверка на пустоту множества
-        bool check_intersectability(); //проверить мн-во на пересекаемость
+        bool checkIntersectability(); //проверить мн-во на пересекаемость
         set& assign(set b); //присваивание множеству this множество b
      
     private:
@@ -44,10 +44,12 @@ namespace binaryMassiv
         
         void assignBorders(int border1, int border2); //присвоить правильно границы
         int countRange(); //высчитывает диапазон
+        int converting(int x); //преобразование числа x в номер элемента массива
     };
     
     set empty_set; //фиктивное пустое множество, ссылка которого будет возвращаться после вызова функции find, результатом которого будет пустое множество
     
+  
     binaryMassiv:: set:: set()
     {
         
@@ -75,7 +77,7 @@ namespace binaryMassiv
             rng = rng + 1; //добавляем ноль
         return rng;
     }
-    
+
     binaryMassiv:: set:: set(int border1, int border2)
     {
         assignBorders(border1, border2);
@@ -89,6 +91,20 @@ namespace binaryMassiv
     binaryMassiv:: set:: ~set()
     {
         
+    }
+    
+    int binaryMassiv:: set:: converting(int x)
+    {
+        return 0;
+    }
+    
+    void binaryMassiv:: set:: insert(int x)
+    {
+        //сперва x нужно преобразовать в значение
+        int item_number = converting(x);
+        
+        if (arr[item_number] != 1) //если такого элемента еще нет в множестве
+            arr[item_number] = 1;
     }
     
     
