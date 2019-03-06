@@ -102,12 +102,16 @@ namespace binaryMassiv
     {
         //сперва x нужно преобразовать в значение
         int item_number = converting(x);
-        
         if (arr[item_number] != 1) //если такого элемента еще нет в множестве
-            arr[item_number] = 1;
+            arr[item_number] = 1; //добавить
     }
     
-    
+    void binaryMassiv:: set:: del(int x)
+    {
+        int item_number = converting(x);
+        if (arr[item_number] != 0) //если такой элемент есть
+            arr[item_number] = 0; //удалить
+    }
     
     
 }
