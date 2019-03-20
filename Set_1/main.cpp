@@ -49,6 +49,8 @@ namespace binaryMassiv
         int right_border; //верхняя граница диапазона
         int *arr; //бинарный массив
         
+        int elem_numbers;
+        
         void assignBorders(int border1, int border2); //присвоить правильно границы
 //        int countRange(); //высчитывает диапазон
 //        int countElemNumbers(double rng); //посчитать число элементов, нужных для диапазона
@@ -90,8 +92,8 @@ namespace binaryMassiv
     binaryMassiv:: set:: set(int border1, int border2)
     {
         assignBorders(border1, border2);
-        double range = abs(left_border + right_border + 1);
-        int elem_numbers = ceil(range/32);
+        double range = right_border - left_border + 1;
+        elem_numbers = ceil(range/32);
         std::cout << elem_numbers << std::endl;
         arr = new int[elem_numbers];
         // заполнение массива нулями
@@ -122,7 +124,23 @@ namespace binaryMassiv
     void binaryMassiv:: set:: insert(int x)
     {
         // нужно число x "отсчитать" в массиве битов и вставить 1 на это место
+        int x_number, //номер числа x в представлении
+        i_nubmer, //номер элемента в массиве, в который будет осущ. вставка
+        bit_number; //номер бита в элементе, в который будет осущ. вставка
         
+        if (x == 0) //0 всегда последний бит последнего элемента
+        {
+            x_number = 0;
+            i_nubmer = elem_numbers;
+            bit_number = 0;
+            SetBit(arr[i_nubmer], bit_number);
+        }
+//        if (x > 0)
+//        {
+//            x_number = x + 1; //добавляем сдвиг из-за нуля
+//        }
+        
+        SetBit(arr[1], 0);
 //        //сперва x нужно преобразовать в значение
 //        int item_number = convertToNumber(x);
 //        if (arr[item_number] != 1) //если такого элемента еще нет в множестве
@@ -152,14 +170,49 @@ namespace binaryMassiv
     
 }
 
+//_____________________________________________________________________________________________________
+//_____________________________________________________________________________________________________
+
 namespace circleList {
+    
+    struct node
+    {
+        int x;
+        node *next;
+    };
+    
     class set {
     public:
+        set();
+        set(int border1, int border2);
+        ~set();
+        
+        set& unite(set a, set b); //объединение множеств
+        set& intersection(set a, set b); //пересечение множеств
+        set& difference(set a, set b); //разность множеств
+        
+        set& find(set b, int x); //поиск элемента x в мн-вах this и b. Возвращаем ссылку на множество, в котором находится элемент или ссылку фиктивного пустого множества
+        set& merge(set a, set b); //"слить" два множества в одно. возвращаем ссылку на новое множество
+        
+        void makenull(); //сделать множество пустым
+        void insert(int x); //вставка элемента x в множество
+        void del(int x); //удалить элемент x из множества
+        void print(); //вывод множества на печать
+        int min(); //возвращает минимальное значение
+        int max(); //возвращает максимальное значение
+        bool equal(set b); //эквивалентность множеств
+        bool member(int x); //принадлежность элемента x множеству
+        bool empty(); //проверка на пустоту множества
+        bool checkIntersectability(); //проверить мн-во на пересекаемость
+        set& assign(set b); //присваивание множеству this множество b
         
     private:
-        
+        node *tail;
     };
 }
+
+//_____________________________________________________________________________________________________
+//_____________________________________________________________________________________________________
 
 namespace linkedList {
     class set {
@@ -173,6 +226,7 @@ namespace linkedList {
 using namespace binaryMassiv;
 int main(int argc, const char * argv[]) {
     set A(44, 0);
+    A.insert(0);
     
 }
 
