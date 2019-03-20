@@ -9,6 +9,13 @@
 #include <iostream>
 #include <math.h>
 
+// Макросы
+#define   SetBit(reg, bit)          reg |= (1<<bit) //поставить 1 в bit
+#define   ClearBit(reg, bit)       reg &= (~(1<<bit)) // поставить 0 в bit
+#define   InvBit(reg, bit)          reg ^= (1<<bit) //инвертировать бит
+#define   BitIsSet(reg, bit)       ((reg & (1<<bit)) != 0) //проверить, стоит ли 1 в бите
+#define   BitIsClear(reg, bit)    ((reg & (1<<bit)) == 0) //проверить, стоит ли 0 в бите
+
 namespace binaryMassiv
 {
     class set
@@ -96,8 +103,6 @@ namespace binaryMassiv
             std::cout << arr[i];
         }
         std::cout << std::endl;
-        
-      
     }
     
     binaryMassiv:: set:: ~set()
@@ -116,10 +121,12 @@ namespace binaryMassiv
     
     void binaryMassiv:: set:: insert(int x)
     {
-        //сперва x нужно преобразовать в значение
-        int item_number = convertToNumber(x);
-        if (arr[item_number] != 1) //если такого элемента еще нет в множестве
-            arr[item_number] = 1; //добавить
+        // нужно число x "отсчитать" в массиве битов и вставить 1 на это место
+        
+//        //сперва x нужно преобразовать в значение
+//        int item_number = convertToNumber(x);
+//        if (arr[item_number] != 1) //если такого элемента еще нет в множестве
+//            arr[item_number] = 1; //добавить
     }
     void binaryMassiv:: set:: del(int x)
     {
