@@ -43,8 +43,8 @@ namespace binaryMassiv
         int *arr; //бинарный массив
         
         void assignBorders(int border1, int border2); //присвоить правильно границы
-        int countRange(); //высчитывает диапазон
-        
+//        int countRange(); //высчитывает диапазон
+//        int countElemNumbers(double rng); //посчитать число элементов, нужных для диапазона
         int convertToNumber(int x); //преобразование числа x в номер элемента массива
         int convertToValue(int number); //преобразование номера элемента массива в значение x
     };
@@ -71,23 +71,33 @@ namespace binaryMassiv
         }
     }
     
-    int binaryMassiv:: set:: countRange()
-    {
-        int rng = abs(left_border + right_border);
-        //  если сумма по модулю равна сумме без модуля
-        if (rng == left_border + right_border)
-            rng = rng + 1; //добавляем ноль
-        return rng;
-    }
-
+//    int binaryMassiv:: set:: countRange()
+//    {
+//        int rng = abs(left_border + right_border);
+//        //  если сумма по модулю равна сумме без модуля
+//        if (rng == left_border + right_border)
+//            rng = rng + 1; //добавляем ноль
+//        return rng;
+//    }
+    
     binaryMassiv:: set:: set(int border1, int border2)
     {
         assignBorders(border1, border2);
-        int range = countRange();
-        arr = new int[range];
+        double range = abs(left_border + right_border + 1);
+        int elem_numbers = ceil(range/32);
+        std::cout << elem_numbers << std::endl;
+        arr = new int[elem_numbers];
         // заполнение массива нулями
-        for (int i = 0; i < range; i++)
+        //НЕПРАВИЛЬНО! нулями должны заполняться байты, а не сами значения массива
+        //ПРАВИЛЬНО!! если нулями заполнить значения, то и байты заполняются нулями
+        for (int i = 0; i < elem_numbers; i++)
+        {
             arr[i] = 0;
+            std::cout << arr[i];
+        }
+        std::cout << std::endl;
+        
+      
     }
     
     binaryMassiv:: set:: ~set()
@@ -153,10 +163,10 @@ namespace linkedList {
     };
 }
 
+using namespace binaryMassiv;
 int main(int argc, const char * argv[]) {
-    // insert code here...
-    std::cout << "Hello, World!\n";
-    return 0;
+    set A(44, 0);
+    
 }
 
 
