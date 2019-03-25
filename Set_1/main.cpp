@@ -207,7 +207,7 @@ namespace circleList {
         int max() const; //возвращает максимальное значение
         bool equal(set b); //эквивалентность множеств
         bool member(int x); //принадлежность элемента x множеству
-        bool empty(); //проверка на пустоту множества
+        bool empty() const; //проверка на пустоту множества
         bool checkIntersectability(); //проверить мн-во на пересекаемость
         set& assign(set b); //присваивание множеству this множество b
         
@@ -219,8 +219,6 @@ namespace circleList {
         node* closestEl(int x) const; //ищет ближайший к x элемент в множестве и возвращает его положение
         node* searchPrev(node* el) const; //поиск предыдущего элемента от el
         node* searchX(int x) const; //ищет местоположение x в списке
-        
-        void clearList();
     };
 }
 
@@ -233,10 +231,11 @@ circleList:: set:: ~set() {
 }
 
 void circleList:: set:: makenull() {
-    if (tail != nullptr)
-    {
-        clearList();
-    }
+}
+
+bool circleList:: set:: empty() const
+{
+    return (tail == nullptr ? true : false);
 }
 
 bool circleList:: set:: existX(int x) const {
@@ -251,18 +250,7 @@ bool circleList:: set:: existX(int x) const {
     return false;
 }
 
-circleList:: node* circleList:: set:: searchX(int x) const
-{
-    node *temp = tail;
-    do
-    {
-        if (temp->x == x) //если элемент нашелся
-            return temp;
-        else
-            temp = temp->next; //не нашелся, ищем дальше по списку
-    } while (temp != tail); //пока не вернулись к изначальному элементу
-    return nullptr;
-}
+
 
 int circleList:: set:: min() const { return tail->next->x; }
 int circleList:: set:: max() const { return tail->x; }
@@ -277,7 +265,7 @@ circleList:: node* circleList:: set:: closestEl(int x) const
                 else
                     temp = temp->next;
     } while (temp != tail);
-    return nullptr;
+    return nullptr; //по идее он не может вернуть nullptr..
 }
 void circleList:: set:: insert(int x)
 {
@@ -294,19 +282,9 @@ void circleList:: set:: insert(int x)
                 tail = tail->next; //если значение больше max, то он становится новым хвостом
         }
         
-        
-        
-//        if (x < min())
-//        {
-//            node *el = new node(x, tail->next);
-//            tail->next = el;
-//        }
-//        if (x > max())
-//        {
-//            node *el = new node(x, tail->next);
-//            tail->next = el;
-//            tail = tail->next;
-//        }
+        node* elem_before_x = closestEl(x);
+        node *el = new node(x, elem_before_x->next); //связали новый элемент с тем, что идет после предыдущего
+        elem_before_x->next = el; //связали предыдущий с новым элементом
     }
 }
 
@@ -320,23 +298,28 @@ circleList:: node* circleList:: set:: searchPrev(node *el) const
         temp = temp->next;
     } while (temp != tail);
     return nullptr; //не нашли
-    
-//    position temp = head;
-//    while (temp != nullptr)
-//    {
-//        if (temp->next == p) //нашли эту позицию
-//            return temp;
-//        temp = temp->next; //ищем и двигаемся по списку
-//    }
-//    return nullptr; //не нашли такую позицию
 }
+
+circleList:: node* circleList:: set:: searchX(int x) const
+{
+    node *temp = tail;
+    do
+    {
+        if (temp->x == x) //если элемент нашелся
+            return temp;
+        else
+            temp = temp->next; //не нашелся, ищем дальше по списку
+    } while (temp != tail); //пока не вернулись к изначальному элементу
+    return nullptr;
+}
+
 void circleList:: set:: del(int x)
 {
     if (existX(x) == true) //если x есть в списке
     {
         if (x == min())
         {
-            tail->next = tail->next->next;
+            tail->next = tail->next->next; //меняем tail->next
             delete tail->next;
         }
         if (x == max())
@@ -372,8 +355,3 @@ int main(int argc, const char * argv[]) {
     A.insert(0);
     
 }
-
-
-
-//        if ((left_border < 0 && right_border < 0) || (left_border > 0 && right_border > 0))
-//        if ((left_border < 0 && right_border > 0) || (left_border > 0 && right_border < 0))
