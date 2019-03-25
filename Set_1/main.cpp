@@ -8,6 +8,7 @@
 
 #include <iostream>
 #include <math.h>
+#include <iomanip>
 
 // Макросы
 #define   SetBit(reg, bit)          reg |= (1<<bit) //поставить 1 в bit
@@ -202,7 +203,7 @@ namespace circleList {
         void makenull(); //сделать множество пустым
         void insert(int x); //вставка элемента x в множество
         void del(int x); //удалить элемент x из множества
-        void print(); //вывод множества на печать
+        void print() const; //вывод множества на печать
         int min() const; //возвращает минимальное значение
         int max() const; //возвращает максимальное значение
         bool equal(set b); //эквивалентность множеств
@@ -240,20 +241,34 @@ bool circleList:: set:: empty() const
 
 bool circleList:: set:: existX(int x) const {
     node *temp = tail;
-    do
+    if (tail != nullptr)
     {
-        if (temp->x == x) //если элемент нашелся
-            return true;
-        else
-            temp = temp->next; //не нашелся, ищем дальше по списку
-    } while (temp != tail); //пока не вернулись к изначальному элементу
+        do
+        {
+            if (temp->x == x) //если элемент нашелся
+                return true;
+            else
+                temp = temp->next; //не нашелся, ищем дальше по списку
+        } while (temp != tail); //пока не вернулись к изначальному элементу
+    }
     return false;
 }
 
-
-
-int circleList:: set:: min() const { return tail->next->x; }
-int circleList:: set:: max() const { return tail->x; }
+int circleList:: set:: min() const {
+    if (tail != nullptr)
+        return tail->next->x;
+    else
+        return NULL;
+    
+}
+int circleList:: set:: max() const {
+    if (tail != nullptr)
+        return tail->x;
+    else
+        return NULL;
+    
+    
+}
 
 circleList:: node* circleList:: set:: closestEl(int x) const
 {
@@ -267,12 +282,16 @@ circleList:: node* circleList:: set:: closestEl(int x) const
     } while (temp != tail);
     return nullptr; //по идее он не может вернуть nullptr..
 }
+
 void circleList:: set:: insert(int x)
 {
     if (existX(x) != true) //если x еще нет в списке
     {
         if (tail == nullptr) //если список пуст
+        {
             tail = new node(x, tail); //создаем первый элемент
+            return;
+        }
         
         if (x > max() || x < min()) //всегда добавляется после tail
         {
@@ -280,6 +299,7 @@ void circleList:: set:: insert(int x)
             tail->next = el;
             if (x > max())
                 tail = tail->next; //если значение больше max, то он становится новым хвостом
+            return;
         }
         
         node* elem_before_x = closestEl(x);
@@ -337,6 +357,16 @@ void circleList:: set:: del(int x)
         delete temp;
     }
 }
+
+void circleList:: set:: print() const
+{
+    node* temp = tail;
+    do
+    {
+        std::cout << temp->x;
+        temp = temp->next;
+    } while (temp != tail);
+}
 //_____________________________________________________________________________________________________
 //_____________________________________________________________________________________________________
 
@@ -349,9 +379,20 @@ namespace linkedList {
     };
 }
 
-using namespace binaryMassiv;
+using namespace std;
+using namespace circleList;
+
+void insertElem(set& setName)
+{
+    int elem;
+    cout << setw(5) << "ДОБАВЛЕНИЕ ЭЛЕМЕНТА В МНОЖЕСТВО" << endl;
+    cout << setw(5) <<  "Введите элемент: ";
+    cin >> elem;
+    setName.insert(elem);
+}
 int main(int argc, const char * argv[]) {
-    set A(44, 0);
-    A.insert(0);
+    set A;
+    insertElem(A);
+    A.print();
     
 }
