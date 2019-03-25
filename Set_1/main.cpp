@@ -251,6 +251,19 @@ bool circleList:: set:: existX(int x) const {
     return false;
 }
 
+circleList:: node* circleList:: set:: searchX(int x) const
+{
+    node *temp = tail;
+    do
+    {
+        if (temp->x == x) //если элемент нашелся
+            return temp;
+        else
+            temp = temp->next; //не нашелся, ищем дальше по списку
+    } while (temp != tail); //пока не вернулись к изначальному элементу
+    return nullptr;
+}
+
 int circleList:: set:: min() const { return tail->next->x; }
 int circleList:: set:: max() const { return tail->x; }
 
@@ -335,6 +348,10 @@ void circleList:: set:: del(int x)
             delete temp;
         }
         
+        node *temp = searchX(x);
+        node* prev = searchPrev(temp);
+        prev->next = temp->next;
+        delete temp;
     }
 }
 //_____________________________________________________________________________________________________
