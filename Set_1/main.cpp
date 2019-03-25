@@ -190,7 +190,6 @@ namespace circleList {
     class set {
     public:
         set();
-//        set(int border1, int border2);
         ~set();
         
         set& unite(set a, set b); //объединение множеств
@@ -215,6 +214,7 @@ namespace circleList {
     private:
         node *tail;
         
+        bool searchX(int x) const; //ищет x во множестве, если находит возвращает 1
         void clearList();
     };
 }
@@ -232,6 +232,22 @@ void circleList:: set:: makenull() {
     {
         clearList();
     }
+}
+
+bool circleList:: set:: searchX(int x) const {
+    node *temp = tail;
+    do
+    {
+        if (temp->x == x) //если элемент нашелся
+            return true;
+        else
+            temp = temp->next; //не нашелся, ищем дальше по списку
+    } while (temp != tail); //пока не вернулись к изначальному элементу
+    return false;
+}
+void circleList:: set:: insert(int x)
+{
+    
 }
 
 //_____________________________________________________________________________________________________
