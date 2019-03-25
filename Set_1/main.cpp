@@ -179,12 +179,18 @@ namespace circleList {
     {
         int x;
         node *next;
+        node ()
+        {
+            x = 0;
+            next = this;
+        }
+        node(int data, node *nxt): x(data), next(nxt) {};
     };
     
     class set {
     public:
         set();
-        set(int border1, int border2);
+//        set(int border1, int border2);
         ~set();
         
         set& unite(set a, set b); //объединение множеств
@@ -208,7 +214,24 @@ namespace circleList {
         
     private:
         node *tail;
+        
+        void clearList();
     };
+}
+
+circleList:: set:: set() {
+    tail = nullptr;
+}
+
+circleList:: set:: ~set() {
+    makenull();
+}
+
+void circleList:: set:: makenull() {
+    if (tail != nullptr)
+    {
+        clearList();
+    }
 }
 
 //_____________________________________________________________________________________________________
