@@ -407,6 +407,8 @@ namespace linkedList {
         
         bool existX(int x) const;
         node* searchLast() const; //поиск последнего элемента в множестве
+        node* searchPrev(node* elem) const; //ищет предыдущий элемент от elem
+        node* searchElem(int x) const; //ищет позицию элемента x в списке
     };
 }
 
@@ -436,6 +438,7 @@ linkedList:: node* linkedList:: set:: searchLast() const
         temp = temp->next;
     return temp;
 }
+
 void linkedList:: set:: insert(int x)
 {
     if (existX(x) != true) //если элемента x еще нет в множестве
@@ -451,6 +454,62 @@ void linkedList:: set:: insert(int x)
         }
     }
 }
+
+linkedList:: node* linkedList:: set:: searchPrev(node *elem) const
+{
+    node* temp = head;
+    while (temp->next != elem)
+    {
+        if (temp->next == elem)
+            return temp;
+        temp = temp->next;
+    }
+    return nullptr;
+}
+
+linkedList:: node* linkedList:: set:: searchElem(int x) const
+{
+    node* temp = head;
+    while (temp->x != x)
+    {
+        if (temp->x == x)
+            return temp;
+        temp = temp->next;
+    }
+    return nullptr;
+}
+
+void linkedList:: set:: del(int x)
+{
+    if (existX(x) == true) //если элемент x есть в множестве
+    {
+      
+        if (head->x == x) //если это первый элемент в множестве
+        {
+            if (head->next == nullptr) // если элемент единственный в множестве
+            {
+                head = nullptr;
+                //возможно нужна очистка??
+            }
+            
+            node* t_head = head;
+            head = head->next;
+            delete t_head;
+        }
+        else
+        {
+            node* el = searchElem(x);
+            node* prev = searchPrev(el); //находим предыдущий от el
+            prev->next = el->next;
+            delete el; //удаляем элемент
+        }
+    }
+}
+
+
+//_____________________________________________________________________________________________________
+//_____________________________________________________________________________________________________
+
 using namespace std;
 using namespace circleList;
 
