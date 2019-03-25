@@ -405,9 +405,52 @@ namespace linkedList {
     private:
         node *head;
         
+        bool existX(int x) const;
+        node* searchLast() const; //поиск последнего элемента в множестве
     };
 }
 
+linkedList:: set:: set() {
+    head = nullptr;
+}
+
+linkedList:: set:: ~set() {
+    makenull();
+}
+
+bool linkedList:: set:: existX(int x) const {
+    node *temp = head;
+    while (temp != nullptr) //пока не дошли до конца списка
+    {
+        if (temp->x == x)
+            return true;
+        temp = temp->next;
+    }
+    return false;
+}
+
+linkedList:: node* linkedList:: set:: searchLast() const
+{
+    node* temp = head;
+    while (temp->next != nullptr)
+        temp = temp->next;
+    return temp;
+}
+void linkedList:: set:: insert(int x)
+{
+    if (existX(x) != true) //если элемента x еще нет в множестве
+    {
+        if (head == nullptr) //вставка в пустое множество
+            head = new node(x, nullptr); //вставка в голову
+        
+        else //вставка в конец со скреплением
+        {
+            node *el = new node(x, nullptr);
+            node* prev = searchLast();
+            prev->next = el; //скрепили новый элемент с последним
+        }
+    }
+}
 using namespace std;
 using namespace circleList;
 
