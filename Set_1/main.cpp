@@ -203,8 +203,8 @@ namespace circleList {
         void insert(int x); //вставка элемента x в множество
         void del(int x); //удалить элемент x из множества
         void print(); //вывод множества на печать
-        int min(); //возвращает минимальное значение
-        int max(); //возвращает максимальное значение
+        int min() const; //возвращает минимальное значение
+        int max() const; //возвращает максимальное значение
         bool equal(set b); //эквивалентность множеств
         bool member(int x); //принадлежность элемента x множеству
         bool empty(); //проверка на пустоту множества
@@ -214,7 +214,12 @@ namespace circleList {
     private:
         node *tail;
         
-        bool searchX(int x) const; //ищет x во множестве, если находит возвращает 1
+        bool existX(int x) const; //ищет x во множестве, если находит возвращает true
+        
+        node* closestEl(int x) const; //ищет ближайший к x элемент в множестве и возвращает его положение
+        node* searchPrev(node* el) const; //поиск предыдущего элемента от el
+        node* searchX(int x) const; //ищет местоположение x в списке
+        
         void clearList();
     };
 }
@@ -234,7 +239,7 @@ void circleList:: set:: makenull() {
     }
 }
 
-bool circleList:: set:: searchX(int x) const {
+bool circleList:: set:: existX(int x) const {
     node *temp = tail;
     do
     {
@@ -245,11 +250,93 @@ bool circleList:: set:: searchX(int x) const {
     } while (temp != tail); //пока не вернулись к изначальному элементу
     return false;
 }
+
+int circleList:: set:: min() const { return tail->next->x; }
+int circleList:: set:: max() const { return tail->x; }
+
+circleList:: node* circleList:: set:: closestEl(int x) const
+{
+    node *temp = tail;
+    do
+    {
+        if (temp->x < x && temp->next->x > x)
+                    return temp;
+                else
+                    temp = temp->next;
+    } while (temp != tail);
+    return nullptr;
+}
 void circleList:: set:: insert(int x)
 {
-    
+    if (existX(x) != true) //если x еще нет в списке
+    {
+        if (tail == nullptr) //если список пуст
+            tail = new node(x, tail); //создаем первый элемент
+        
+        if (x > max() || x < min()) //всегда добавляется после tail
+        {
+            node *el = new node(x, tail->next);
+            tail->next = el;
+            if (x > max())
+                tail = tail->next; //если значение больше max, то он становится новым хвостом
+        }
+        
+        
+        
+//        if (x < min())
+//        {
+//            node *el = new node(x, tail->next);
+//            tail->next = el;
+//        }
+//        if (x > max())
+//        {
+//            node *el = new node(x, tail->next);
+//            tail->next = el;
+//            tail = tail->next;
+//        }
+    }
 }
 
+circleList:: node* circleList:: set:: searchPrev(node *el) const
+{
+    node *temp = tail;
+    do
+    {
+        if (temp->next == el) //если нашли такую позицию
+            return temp;
+        temp = temp->next;
+    } while (temp != tail);
+    return nullptr; //не нашли
+    
+//    position temp = head;
+//    while (temp != nullptr)
+//    {
+//        if (temp->next == p) //нашли эту позицию
+//            return temp;
+//        temp = temp->next; //ищем и двигаемся по списку
+//    }
+//    return nullptr; //не нашли такую позицию
+}
+void circleList:: set:: del(int x)
+{
+    if (existX(x) == true) //если x есть в списке
+    {
+        if (x == min())
+        {
+            tail->next = tail->next->next;
+            delete tail->next;
+        }
+        if (x == max())
+        {
+            node* prev = searchPrev(tail);
+            prev->next = tail->next; //скрепили предыдущий от максимального со следующим от него
+            node *temp = tail;
+            tail = tail->next;
+            delete temp;
+        }
+        
+    }
+}
 //_____________________________________________________________________________________________________
 //_____________________________________________________________________________________________________
 
