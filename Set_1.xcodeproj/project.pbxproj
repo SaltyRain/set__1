@@ -7,6 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		E67F41AD225011C700BA707A /* binaryMassiv.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E67F41AB225011C700BA707A /* binaryMassiv.cpp */; };
+		E67F41B0225012C300BA707A /* circleList.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E67F41AE225012C300BA707A /* circleList.cpp */; };
+		E67F41B32250132500BA707A /* linkedList.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E67F41B12250132500BA707A /* linkedList.cpp */; };
+		E67F41B4225014B000BA707A /* linkedList.hpp in Sources */ = {isa = PBXBuildFile; fileRef = E67F41B22250132500BA707A /* linkedList.hpp */; };
+		E67F41B5225014B000BA707A /* circleList.hpp in Sources */ = {isa = PBXBuildFile; fileRef = E67F41AF225012C300BA707A /* circleList.hpp */; };
+		E67F41B6225014B000BA707A /* binaryMassiv.hpp in Sources */ = {isa = PBXBuildFile; fileRef = E67F41AC225011C700BA707A /* binaryMassiv.hpp */; };
 		E6C3637E222F22E00048FD82 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E6C3637D222F22E00048FD82 /* main.cpp */; };
 /* End PBXBuildFile section */
 
@@ -23,6 +29,12 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		E67F41AB225011C700BA707A /* binaryMassiv.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = binaryMassiv.cpp; sourceTree = "<group>"; };
+		E67F41AC225011C700BA707A /* binaryMassiv.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = binaryMassiv.hpp; sourceTree = "<group>"; };
+		E67F41AE225012C300BA707A /* circleList.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = circleList.cpp; sourceTree = "<group>"; };
+		E67F41AF225012C300BA707A /* circleList.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = circleList.hpp; sourceTree = "<group>"; };
+		E67F41B12250132500BA707A /* linkedList.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = linkedList.cpp; sourceTree = "<group>"; };
+		E67F41B22250132500BA707A /* linkedList.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = linkedList.hpp; sourceTree = "<group>"; };
 		E6C3637A222F22E00048FD82 /* Set_1 */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = Set_1; sourceTree = BUILT_PRODUCTS_DIR; };
 		E6C3637D222F22E00048FD82 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -58,6 +70,12 @@
 			isa = PBXGroup;
 			children = (
 				E6C3637D222F22E00048FD82 /* main.cpp */,
+				E67F41B12250132500BA707A /* linkedList.cpp */,
+				E67F41B22250132500BA707A /* linkedList.hpp */,
+				E67F41AE225012C300BA707A /* circleList.cpp */,
+				E67F41AF225012C300BA707A /* circleList.hpp */,
+				E67F41AB225011C700BA707A /* binaryMassiv.cpp */,
+				E67F41AC225011C700BA707A /* binaryMassiv.hpp */,
 			);
 			path = Set_1;
 			sourceTree = "<group>";
@@ -118,7 +136,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E67F41B4225014B000BA707A /* linkedList.hpp in Sources */,
+				E67F41B5225014B000BA707A /* circleList.hpp in Sources */,
+				E67F41B6225014B000BA707A /* binaryMassiv.hpp in Sources */,
 				E6C3637E222F22E00048FD82 /* main.cpp in Sources */,
+				E67F41AD225011C700BA707A /* binaryMassiv.cpp in Sources */,
+				E67F41B32250132500BA707A /* linkedList.cpp in Sources */,
+				E67F41B0225012C300BA707A /* circleList.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -239,8 +263,11 @@
 		E6C36382222F22E00048FD82 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ADDRESS_SANITIZER_CONTAINER_OVERFLOW = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = MZXZN8YZ37;
+				INFOPLIST_PREPROCESS = NO;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -248,8 +275,11 @@
 		E6C36383222F22E00048FD82 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ADDRESS_SANITIZER_CONTAINER_OVERFLOW = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = MZXZN8YZ37;
+				INFOPLIST_PREPROCESS = NO;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
