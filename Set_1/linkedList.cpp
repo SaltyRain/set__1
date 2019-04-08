@@ -6,7 +6,11 @@
 //  Copyright © 2019 Timur. All rights reserved.
 //
 
+#include <iostream>
+
 #include "linkedList.hpp"
+
+using namespace std;
 
 linkedList:: set:: set() {
     head = nullptr;
@@ -77,14 +81,15 @@ linkedList:: node* linkedList:: set:: searchElem(int x) const
 
 linkedList:: node* linkedList:: set:: searchPrevByValue(int x) const
 {
-    node* temp = head;
-    while (temp->next->x != x)
-    {
-        if (temp->next->x != x)
-            return temp;
-        temp = temp->next;
+    node* temp1 = head;
+    node* temp2 = nullptr;
+    while (temp1 != nullptr) {
+        temp2 = temp1;
+        temp1 =  temp1->next;
+        if (temp1->x == x)
+            return temp2;
     }
-    return nullptr;
+    return nullptr; //нет такого элемента
 }
 
 void linkedList:: set:: del(int x)
@@ -94,26 +99,42 @@ void linkedList:: set:: del(int x)
         if (head->x == x) //если это первый элемент в множестве
         {
             if (head->next == nullptr) // если элемент единственный в множестве
-            {
                 head = nullptr;
-                //возможно нужна очистка??
+            else
+            {
+                node* t_head = head;
+                head = head->next;
+                delete t_head;
             }
-            
-            node* t_head = head;
-            head = head->next;
-            delete t_head;
         }
+        
         else
         {
-            //            node* el = searchElem(x);
-            //            node* prev = searchPrev(el); //находим предыдущий от el
-            //            prev->next = el->next;
-            //            delete el; //удаляем элемент
-            
-            node* prev = searchPrevByValue(x);
-            node* el = prev->next;
-            prev->next = el->next;
-            delete el;
+            node* el_prev = searchPrevByValue(x);
+            if (el_prev->next->next != nullptr) //если элемент не последний во множестве
+            {
+                node* el_next = el_prev->next->next;
+                delete el_prev->next; //удаляем элемент
+                el_prev->next = el_next; //связали предыдущий от элемента и следующий от него
+            }
+            else
+            {
+                //если элемент - последний во множестве
+                el_prev->next = nullptr;
+            }
         }
     }
 }
+
+void linkedList:: set:: print() const
+{
+    node *temp = head;
+    while (temp != nullptr)
+    {
+        std::cout << temp->x << " ";
+        temp = temp->next;
+    }
+    std::cout << std::endl;
+}
+
+
