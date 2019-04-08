@@ -10,9 +10,6 @@
 		E67F41AD225011C700BA707A /* binaryMassiv.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E67F41AB225011C700BA707A /* binaryMassiv.cpp */; };
 		E67F41B0225012C300BA707A /* circleList.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E67F41AE225012C300BA707A /* circleList.cpp */; };
 		E67F41B32250132500BA707A /* linkedList.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E67F41B12250132500BA707A /* linkedList.cpp */; };
-		E67F41B4225014B000BA707A /* linkedList.hpp in Sources */ = {isa = PBXBuildFile; fileRef = E67F41B22250132500BA707A /* linkedList.hpp */; };
-		E67F41B5225014B000BA707A /* circleList.hpp in Sources */ = {isa = PBXBuildFile; fileRef = E67F41AF225012C300BA707A /* circleList.hpp */; };
-		E67F41B6225014B000BA707A /* binaryMassiv.hpp in Sources */ = {isa = PBXBuildFile; fileRef = E67F41AC225011C700BA707A /* binaryMassiv.hpp */; };
 		E6C3637E222F22E00048FD82 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E6C3637D222F22E00048FD82 /* main.cpp */; };
 /* End PBXBuildFile section */
 
@@ -71,11 +68,11 @@
 			children = (
 				E6C3637D222F22E00048FD82 /* main.cpp */,
 				E67F41B12250132500BA707A /* linkedList.cpp */,
-				E67F41B22250132500BA707A /* linkedList.hpp */,
 				E67F41AE225012C300BA707A /* circleList.cpp */,
+				E67F41AC225011C700BA707A /* binaryMassiv.hpp */,
+				E67F41B22250132500BA707A /* linkedList.hpp */,
 				E67F41AF225012C300BA707A /* circleList.hpp */,
 				E67F41AB225011C700BA707A /* binaryMassiv.cpp */,
-				E67F41AC225011C700BA707A /* binaryMassiv.hpp */,
 			);
 			path = Set_1;
 			sourceTree = "<group>";
@@ -136,9 +133,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E67F41B4225014B000BA707A /* linkedList.hpp in Sources */,
-				E67F41B5225014B000BA707A /* circleList.hpp in Sources */,
-				E67F41B6225014B000BA707A /* binaryMassiv.hpp in Sources */,
 				E6C3637E222F22E00048FD82 /* main.cpp in Sources */,
 				E67F41AD225011C700BA707A /* binaryMassiv.cpp in Sources */,
 				E67F41B32250132500BA707A /* linkedList.cpp in Sources */,

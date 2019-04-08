@@ -81,11 +81,12 @@ void circleList:: set:: insert(int x)
             return;
         }
         
-        if (x > max() || x < min()) //всегда добавляется после tail
+        int min = tail->next->x, max = tail->x;
+        if (x > max || x < min) //всегда добавляется после tail
         {
             node *el = new node(x, tail->next);
             tail->next = el;
-            if (x > max())
+            if (x > max)
                 tail = tail->next; //если значение больше max, то он становится новым хвостом
             return;
         }
@@ -151,7 +152,8 @@ void circleList:: set:: print() const
     node* temp = tail;
     do
     {
-        std::cout << temp->x;
-        temp = temp->next;
+        std::cout << temp->x << " ";
+        if (temp->next != nullptr) // если мн-во состоит больше чем из одного элемента
+            temp = temp->next;
     } while (temp != tail);
 }

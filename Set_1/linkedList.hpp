@@ -20,6 +20,7 @@ namespace linkedList {
         node(){}
         node(int data, node *nxt): x(data), next(nxt) {};
     };
+    
     class set {
     public:
         set();

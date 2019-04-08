@@ -12,19 +12,26 @@
 
 #include "binaryMassiv.hpp"
 #include "circleList.hpp"
-//#include "linkedList.hpp"
+#include "linkedList.hpp"
 
 using namespace std;
 
-using namespace circleList;
+using namespace linkedList;
 
 void insertElem(set& setName)
 {
+    int code = 1;
     int elem;
     cout << setw(5) << "ДОБАВЛЕНИЕ ЭЛЕМЕНТА В МНОЖЕСТВО" << endl;
-    cout << setw(5) <<  "Введите элемент: ";
-    cin >> elem;
-    setName.insert(elem);
+    while (code == 1)
+    {
+        cout << setw(5) <<  "Введите элемент: ";
+        cin >> elem;
+        setName.insert(elem);
+        cout << setw(5) << "Элемент добавлен. Добавить еще элемент? (1 - да/ 0 - нет)";
+        cin >> code;
+    }
+   
 }
 
 
