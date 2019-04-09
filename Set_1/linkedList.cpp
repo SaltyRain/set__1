@@ -20,6 +20,35 @@ linkedList:: set:: ~set() {
 //    makenull();
 }
 
+linkedList:: set:: set(const set &s) //копирующий конструктор
+{
+    node *temp1 = nullptr; //текущий
+    node *temp2 = nullptr; //следующий
+    
+    if (s.head == nullptr) //если копируем пустой список
+        head = nullptr;
+    else
+    {
+        head = new node; //выделяем память под новую голову
+        head->x = s.head->x; //скопировали данные в новую голову
+        
+        temp1 = head;
+        temp2 = s.head->next;
+        
+        while (temp2 != nullptr) //пока не закончился исходный список
+        {
+            temp1->next = new node;
+            temp1 = temp1->next;
+            temp1->x = temp2->x; //скопировали содержимое
+            
+            temp2 = temp2->next; //переместились к следующему элементу
+        }
+        temp1->next = nullptr;
+    }
+    
+    
+}
+
 bool linkedList:: set:: existX(int x) const {
     node *temp = head;
     while (temp != nullptr) //пока не дошли до конца списка
@@ -61,18 +90,6 @@ linkedList:: node* linkedList:: set:: searchPrev(node *elem) const
     while (temp->next != elem)
     {
         if (temp->next == elem)
-            return temp;
-        temp = temp->next;
-    }
-    return nullptr;
-}
-
-linkedList:: node* linkedList:: set:: searchElem(int x) const
-{
-    node* temp = head;
-    while (temp->x != x)
-    {
-        if (temp->x == x)
             return temp;
         temp = temp->next;
     }
@@ -126,6 +143,23 @@ void linkedList:: set:: del(int x)
     }
 }
 
+
+linkedList:: set linkedList:: set:: unite(const set &b)
+{
+    set c(*this); //копируем множество a в новое множество c
+    
+    node *c_tail = c.searchLast(); //запомнили указатель на последний в с
+    node *el = new node;
+    el = b.head;
+    c_tail->next = el;
+    
+    node *temp = b.head->next;
+    while (temp != nullptr) //ищем по множеству b пока оно не закончилось
+    {
+        
+    }
+}
+
 void linkedList:: set:: print() const
 {
     node *temp = head;
@@ -137,4 +171,15 @@ void linkedList:: set:: print() const
     std::cout << std::endl;
 }
 
+void linkedList:: set:: makenull()
+{
+    node* temp;
+    while (head != nullptr)
+    {
+        temp = head;
+        head = head->next;
+        delete temp;
+    }
+    head = nullptr;
+}
 

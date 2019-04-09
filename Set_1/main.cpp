@@ -90,6 +90,18 @@ void menu(set& setName)
 
 int main(int argc, const char * argv[]) {
     set A;
-    menu(A);
+//    menu(A);
+    insertElem(A);
+    cout << "A = ";
+    A.print();
+    
+    set B(A);
+    cout << "B = ";
+    B.print();
+    
+    B.makenull();
+    cout << "B = ";
+    B.print();
     
 }
+
