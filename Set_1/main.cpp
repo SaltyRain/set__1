@@ -9,14 +9,35 @@
 #include <iostream>
 #include <math.h>
 #include <iomanip>
+#include <fstream>
 
 #include "binaryMassiv.hpp"
 #include "circleList.hpp"
 #include "linkedList.hpp"
 
+#define FILENAME "set.txt"
+
 using namespace std;
 
 using namespace linkedList;
+
+void readSetFromFile (const char *filename, set &setName)
+{
+    ifstream f;
+    f.open(filename); //открываем файл
+    if (!f.is_open()) //если не получилось открыть файл
+    {
+        cout << "Файл не открыт" << endl;
+        f.close();
+        return;
+    }
+    int x;
+    while (!f.eof())
+    {
+        f >> x;
+        setName.insert(x);
+    }
+}
 
 void insertElem(set& setName)
 {
@@ -89,19 +110,34 @@ void menu(set& setName)
 
 
 int main(int argc, const char * argv[]) {
-    set A;
-//    menu(A);
-    insertElem(A);
+//    set A;
+//    insertElem(A);
+//    cout << "A = ";
+//    A.print();
+//
+//    set B;
+//    insertElem(B);
+//    cout << "B = ";
+//    B.print();
+    
+    set A, B;
+    readSetFromFile("A.txt", A);
+    readSetFromFile("B.txt", B);
+    
     cout << "A = ";
     A.print();
     
-    set B(A);
     cout << "B = ";
     B.print();
     
-    B.makenull();
-    cout << "B = ";
-    B.print();
+    set C = A.intersection(B);
+    cout << "C = ";
+    C.print();
+    
+    
+//    B.makenull();
+//    cout << "B = ";
+//    B.print();
     
 }
 

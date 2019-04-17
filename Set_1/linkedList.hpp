@@ -55,31 +55,9 @@ namespace linkedList {
         node* searchPrev(node* elem) const; //ищет предыдущий элемент от elem
 
         node* searchPrevByValue(int x) const; //возвращает место предыдущего элемента от x
+        
+        void addElemToSet(int x); //добавить элемент х во множество setName
     };
 }
 
 #endif /* linkedList_hpp */
-//
-//node *temp1 = nullptr; //текущий
-//node *temp2 = nullptr; //следующий
-//
-//if (s.head == nullptr) //если копируем пустой список
-//head = nullptr;
-//else
-//{
-//    head = new node; //выделяем память под новую голову
-//    head->x = s.head->x; //скопировали данные в новую голову
-//
-//    temp1 = head;
-//    temp2 = s.head->next;
-//
-//    while (temp2 != nullptr) //пока не закончился исходный список
-//    {
-//        temp1->next = new node;
-//        temp1 = temp1->next;
-//        temp1->x = temp2->x; //скопировали содержимое
-//
-//        temp2 = temp2->next; //переместились к следующему элементу
-//    }
-//    temp1->next = nullptr;
-//    }

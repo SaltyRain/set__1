@@ -68,20 +68,23 @@ linkedList:: node* linkedList:: set:: searchLast() const
     return temp;
 }
 
+void linkedList:: set:: addElemToSet(int x)
+{
+    if (head == nullptr) //вставка в пустое множество
+        head = new node(x, nullptr); //вставка в голову
+    
+    else //вставка в конец со скреплением
+    {
+        node *el = new node(x, nullptr);
+        node* prev = searchLast();
+        prev->next = el; //скрепили новый элемент с последним
+    }
+}
+
 void linkedList:: set:: insert(int x)
 {
     if (existX(x) != true) //если элемента x еще нет в множестве
-    {
-        if (head == nullptr) //вставка в пустое множество
-            head = new node(x, nullptr); //вставка в голову
-        
-        else //вставка в конец со скреплением
-        {
-            node *el = new node(x, nullptr);
-            node* prev = searchLast();
-            prev->next = el; //скрепили новый элемент с последним
-        }
-    }
+        addElemToSet(x);
 }
 
 linkedList:: node* linkedList:: set:: searchPrev(node *elem) const
@@ -144,7 +147,8 @@ void linkedList:: set:: del(int x)
 }
 
 
-linkedList:: set linkedList:: set:: unite(const set &b)
+
+linkedList:: set linkedList:: set:: unite(const set &b) //объединение мн-в
 {
     set c(*this); //копируем множество a в новое множество c
     
@@ -158,6 +162,39 @@ linkedList:: set linkedList:: set:: unite(const set &b)
     {
         
     }
+    return c;
+}
+
+linkedList:: set linkedList:: set:: intersection(const set &b) //пересечение мн-в
+{
+    set c;
+    if (head == nullptr || b.head == nullptr) //если хотя-бы одно из множеств пустое
+        return c; //возвращаем пустое множество
+    
+    node *temp_a = head, *temp_b;
+
+    while (temp_a != nullptr) //пока не прошлись по всему мн-ву а
+    {
+        temp_b = b.head; //откатили назад B
+        while (temp_b != nullptr) //пока не прошлись по всему мн-ву b
+        {
+            if (temp_a->x == temp_b->x) //если нашли в B такой же элемент как из А
+            {
+                c.addElemToSet(temp_a->x);//добавить элемент во множество С
+                break;
+            }
+            temp_b = temp_b->next; //иначе ищем дальше
+        }
+        temp_a = temp_a->next; //идем к следующему элементу
+    }
+    return c;
+}
+
+linkedList:: set linkedList:: set:: difference(const set &b) //разность мн-в
+{
+    set c;
+    
+    return c;
 }
 
 void linkedList:: set:: print() const
@@ -187,7 +224,7 @@ int linkedList:: set:: min() const
 {
     node* temp = head;
     int min_x = temp->x;
-    while (temp->next != nullptr)
+    while (temp != nullptr)
     {
         if (temp->x < min_x) //если нашелся x меньше mix_x
             min_x = temp->x; //x становится min_x
@@ -200,7 +237,7 @@ int linkedList:: set:: max() const
 {
     node* temp = head;
     int max_x = temp->x;
-    while (temp->next != nullptr)
+    while (temp != nullptr)
     {
         if (temp->x > max_x) //если нашелся x меньше mix_x
             max_x = temp->x; //x становится min_x
