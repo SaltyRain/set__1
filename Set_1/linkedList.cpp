@@ -183,3 +183,28 @@ void linkedList:: set:: makenull()
     head = nullptr;
 }
 
+int linkedList:: set:: min() const
+{
+    node* temp = head;
+    int min_x = temp->x;
+    while (temp->next != nullptr)
+    {
+        if (temp->x < min_x) //если нашелся x меньше mix_x
+            min_x = temp->x; //x становится min_x
+        temp = temp->next;
+    }
+    return min_x;
+}
+
+int linkedList:: set:: max() const
+{
+    node* temp = head;
+    int max_x = temp->x;
+    while (temp->next != nullptr)
+    {
+        if (temp->x > max_x) //если нашелся x меньше mix_x
+            max_x = temp->x; //x становится min_x
+        temp = temp->next;
+    }
+    return max_x;
+}
