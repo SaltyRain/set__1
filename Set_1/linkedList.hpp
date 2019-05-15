@@ -57,6 +57,7 @@ namespace linkedList {
         node* searchPrevByValue(int x) const; //возвращает место предыдущего элемента от x
         
         void addElemToSet(int x); //добавить элемент х во множество setName
+        void addElemAfterPosition(int x, node* position); // добавить элемент х после position
     };
 }
 

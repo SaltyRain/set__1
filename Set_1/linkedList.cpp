@@ -12,6 +12,8 @@
 
 using namespace std;
 
+linkedList:: set fake_set;
+
 linkedList:: set:: set() {
     head = nullptr;
 }
@@ -66,6 +68,18 @@ linkedList:: node* linkedList:: set:: searchLast() const
     while (temp->next != nullptr)
         temp = temp->next;
     return temp;
+}
+
+void linkedList:: set:: addElemAfterPosition(int x, node* position)
+{
+    if (head == nullptr) //вставка в пустое множество
+        head = new node(x, nullptr); //вставка в голову
+    
+    else //вставка в позицию со скреплением
+    {
+        node *el = new node(x, nullptr);
+        position->next = el; //скрепили новый элемент с последним
+    }
 }
 
 void linkedList:: set:: addElemToSet(int x)
@@ -150,51 +164,112 @@ void linkedList:: set:: del(int x)
 
 linkedList:: set linkedList:: set:: unite(const set &b) //объединение мн-в
 {
-    set c(*this); //копируем множество a в новое множество c
-    
-    node *c_tail = c.searchLast(); //запомнили указатель на последний в с
-    node *el = new node;
-    el = b.head;
-    c_tail->next = el;
-    
-    node *temp = b.head->next;
-    while (temp != nullptr) //ищем по множеству b пока оно не закончилось
+    if (head == nullptr) // если множество А пустое
     {
-        
+        set c(b); //копируем множество B так как А пустое
+        return c; //возвращаем множество B
     }
-    return c;
+    
+    if (this != &b) //если А и Б - не одно и то же множество (c = a.unite(a))
+    {
+        set c(*this);
+        
+        if (b.head == nullptr) //если Б пустое или множества эквивалентны
+            return c;
+        
+        node *c_initalTail = c.searchLast(); //запомнили указатель на последний в с
+        node *c_tail = c_initalTail; //этот указатель будет смещаться и находить место для вставки новых элементов
+        node *c_temp = c.head;
+        node *b_temp =  b.head;
+        
+        bool same = false; //проверяет, нашелся ли в с элемент из б
+        
+        while (b_temp != nullptr) //ищем по множеству b пока оно не закончилось
+        {
+            while (c_temp != c_initalTail) //пока не дошли до изначального конца с
+            {
+                if (b_temp->x == c_temp->x) //если в множестве с нашлось b
+                {
+                    same = true;
+                    break;
+                }
+                
+                c_temp = c_temp->next; //иначе ищем совпадение дальше. переходим к следующему из с
+            }
+            if (same == false) //если элемент не нашелся -> добавляем в c
+            {
+                c.addElemAfterPosition(b_temp->x, c_tail); //добавляем элемент в множество после c_tail
+                c_tail = c_tail->next; //смещаем хвост
+            }
+            same = true;
+            c_temp = c.head; //возвращаем temp в начало множества
+            b_temp = b_temp->next;
+        }
+         return c;
+    }
+    return *this;
 }
 
 linkedList:: set linkedList:: set:: intersection(const set &b) //пересечение мн-в
 {
-    set c;
-    if (head == nullptr || b.head == nullptr) //если хотя-бы одно из множеств пустое
-        return c; //возвращаем пустое множество
-    
-    node *temp_a = head, *temp_b;
-
-    while (temp_a != nullptr) //пока не прошлись по всему мн-ву а
+    if (this != &b) //если А и Б - не одно и то же множество (c = a.intersection(a))
     {
-        temp_b = b.head; //откатили назад B
-        while (temp_b != nullptr) //пока не прошлись по всему мн-ву b
+        set c;
+        if (head == nullptr || b.head == nullptr) //если хотя-бы одно из множеств пустое
+            return c; //возвращаем пустое множество
+        
+        node *temp_a = head, *temp_b;
+        
+        while (temp_a != nullptr) //пока не прошлись по всему мн-ву а
         {
-            if (temp_a->x == temp_b->x) //если нашли в B такой же элемент как из А
+            temp_b = b.head; //откатили назад B
+            while (temp_b != nullptr) //пока не прошлись по всему мн-ву b
             {
-                c.addElemToSet(temp_a->x);//добавить элемент во множество С
-                break;
+                if (temp_a->x == temp_b->x) //если нашли в B такой же элемент как из А
+                {
+                    c.addElemToSet(temp_a->x);//добавить элемент во множество С
+                    break;
+                }
+                temp_b = temp_b->next; //иначе ищем дальше
             }
-            temp_b = temp_b->next; //иначе ищем дальше
+            temp_a = temp_a->next; //идем к следующему элементу
         }
-        temp_a = temp_a->next; //идем к следующему элементу
+        return c;
     }
-    return c;
+    return *this;
 }
 
 linkedList:: set linkedList:: set:: difference(const set &b) //разность мн-в
 {
     set c;
-    
-    return c;
+    if (this != &b) //если А и Б - не одно и то же множество (c = a.difference(a))
+    {
+        if (head == nullptr)
+            return c; //вернуть пустое множество
+        if (b.head == nullptr)
+            return *this; //вернуть множество A
+        
+        node *temp_a = head, *temp_b;
+        int flag;
+        while (temp_a != nullptr) //пока не прошлись по всему мн-ву а
+        {
+            temp_b = b.head; //откатили назад B
+            flag = 0;
+            while (temp_b != nullptr) //пока не прошлись по всему мн-ву b
+            {
+                if (temp_a->x == temp_b->x) //если нашли в B такой же элемент как из А
+                {
+                    flag = 1;
+                    break;
+                }
+                temp_b = temp_b->next; //иначе ищем дальше
+            }
+            if (flag != 1)
+                c.addElemToSet(temp_a->x);//добавить элемент во множество С
+            temp_a = temp_a->next; //идем к следующему элементу
+        }
+    }
+    return c; //если А и Б равны вернется пустое
 }
 
 void linkedList:: set:: print() const
