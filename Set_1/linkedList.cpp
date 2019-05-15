@@ -274,23 +274,30 @@ linkedList:: set linkedList:: set:: difference(const set &b) //разность 
 
 void linkedList:: set:: print() const
 {
-    node *temp = head;
-    while (temp != nullptr)
+    if (head != nullptr)
     {
-        std::cout << temp->x << " ";
-        temp = temp->next;
+        node *temp = head;
+        while (temp != nullptr)
+        {
+            cout << temp->x << " ";
+            temp = temp->next;
+        }
+        cout << endl;
     }
-    std::cout << std::endl;
+    else
+        cout << "Пустое" << endl;
+    
 }
 
 void linkedList:: set:: makenull()
 {
-    node* temp;
-    while (head != nullptr)
+    node *temp1;
+    node *temp2 = head;
+    while (temp2 != nullptr)
     {
-        temp = head;
-        head = head->next;
-        delete temp;
+        temp1 = temp2;
+        temp2 = temp2->next;
+        delete temp1;
     }
     head = nullptr;
 }
@@ -320,3 +327,15 @@ int linkedList:: set:: max() const
     }
     return max_x;
 }
+
+bool linkedList:: set:: empty() const
+{
+    return head == nullptr;
+}
+
+//bool linkedList:: set:: equal(const set &b) const
+//{
+//
+//}
+
+

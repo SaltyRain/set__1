@@ -143,9 +143,36 @@ int main(int argc, const char * argv[]) {
     D.print();
     
     
-//    B.makenull();
+    cout << "min A = " << A.max() << endl;
+    cout << "max A = " << A.max() << endl;
+    
+    cout << "min B = " << B.min() << endl;
+    cout << "max B = " << B.max() << endl;
+    
+//    insertElem(A);
+//    cout << "A = ";
+//    A.print();
+//
+//    insertElem(B);
 //    cout << "B = ";
 //    B.print();
+//
+//    delElem(A);
+//    cout << "A = ";
+//    A.print();
+//
+//    delElem(B);
+//    cout << "B = ";
+//    B.print();
+    
+    cout << "Множество B пустое? " << (B.empty() ? "Да" : "Нет") << endl;
+    
+    B.makenull();
+    cout << "B = ";
+    B.print();
+    
+    cout << "Множество B пустое? " << (B.empty() ? "Да" : "Нет") << endl;
+
     
 }
 

@@ -42,8 +42,8 @@ namespace linkedList {
         int min() const; //возвращает минимальное значение
         int max() const; //возвращает максимальное значение
         
-        bool equal(const set& b); //эквивалентность множеств
-        bool member(int x); //принадлежность элемента x множеству
+        bool equal(const set& b) const; //эквивалентность множеств
+        bool member(int x) const; //принадлежность элемента x множеству
         bool empty() const; //проверка на пустоту множества
         bool checkIntersectability() const; //проверить мн-во на пересекаемость
      
