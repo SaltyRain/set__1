@@ -26,16 +26,18 @@ namespace circleList {
     };
     
     class set {
-    public:
+    public:        
         set();
         ~set();
+        set(const set &s); //копирующий конструктор
         
-        set& unite(set a, set b); //объединение множеств
-        set& intersection(set a, set b); //пересечение множеств
-        set& difference(set a, set b); //разность множеств
+        set unite(const set& b); //объединение множеств
+        set intersection(const set& b); //пересечение множеств
+        set difference(const set& b); //разность множеств
         
-        set& find(set b, int x); //поиск элемента x в мн-вах this и b. Возвращаем ссылку на множество, в котором находится элемент или ссылку фиктивного пустого множества
-        set& merge(set a, set b); //"слить" два множества в одно. возвращаем ссылку на новое множество
+        set& find(const set& b, int x) const; //поиск элемента x в мн-вах this и b. Возвращаем ссылку на множество, в котором находится элемент или ссылку фиктивного пустого множества
+        set& merge(const set& b); //"слить" два множества в одно. возвращаем ссылку на новое множество
+        set& assign(const set& b); //присваивание множеству this множество b
         
         void makenull(); //сделать множество пустым
         void insert(int x); //вставка элемента x в множество
@@ -43,16 +45,18 @@ namespace circleList {
         void print() const; //вывод множества на печать
         int min() const; //возвращает минимальное значение
         int max() const; //возвращает максимальное значение
-        bool equal(set b); //эквивалентность множеств
-        bool member(int x); //принадлежность элемента x множеству
+        
+        bool equal(const set& b) const; //эквивалентность множеств
+        bool member(int x) const; //принадлежность элемента x множеству
         bool empty() const; //проверка на пустоту множества
-        bool checkIntersectability(); //проверить мн-во на пересекаемость
-        set& assign(set b); //присваивание множеству this множество b
+        bool checkIntersectability() const; //проверить мн-во на пересекаемость
         
     private:
         node *tail;
         
         bool existX(int x) const; //ищет x во множестве, если находит возвращает true
+        
+        void addElemToSet(int x); //добавление элемента к множеству
         
         node* closestEl(int x) const; //ищет ближайший к x элемент в множестве и возвращает его положение
         node* searchPrev(node* el) const; //поиск предыдущего элемента от el

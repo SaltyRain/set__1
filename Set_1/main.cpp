@@ -19,7 +19,8 @@
 
 using namespace std;
 
-using namespace linkedList;
+//using namespace linkedList;
+using namespace circleList;
 
 void readSetFromFile (const char *filename, set &setName)
 {
@@ -122,33 +123,33 @@ int main(int argc, const char * argv[]) {
     
     set A, B;
     readSetFromFile("A.txt", A);
-    readSetFromFile("B.txt", B);
-    
+//    readSetFromFile("B.txt", B);
+//
     cout << "A = ";
     A.print();
+//
+//    cout << "B = ";
+//    B.print();
     
-    cout << "B = ";
-    B.print();
+//    set U = A.unite(B);
+//    cout << "U(объединение) = ";
+//    U.print();
+//
+//    set C = A.intersection(B);
+//    cout << "C(пересечение) = ";
+//    C.print();
+//
+//    set D = A.difference(B);
+//    cout << "D(разность) = ";
+//    D.print();
     
-    set U = A.unite(B);
-    cout << "U(объединение) = ";
-    U.print();
-    
-    set C = A.intersection(B);
-    cout << "C(пересечение) = ";
-    C.print();
-    
-    set D = A.difference(B);
-    cout << "D(разность) = ";
-    D.print();
-    
-    
-    cout << "min A = " << A.max() << endl;
-    cout << "max A = " << A.max() << endl;
-    
-    cout << "min B = " << B.min() << endl;
-    cout << "max B = " << B.max() << endl;
-    
+//
+//    cout << "min A = " << A.max() << endl;
+//    cout << "max A = " << A.max() << endl;
+//
+//    cout << "min B = " << B.min() << endl;
+//    cout << "max B = " << B.max() << endl;
+//
 //    insertElem(A);
 //    cout << "A = ";
 //    A.print();
@@ -164,15 +165,17 @@ int main(int argc, const char * argv[]) {
 //    delElem(B);
 //    cout << "B = ";
 //    B.print();
-    
-    cout << "Множество B пустое? " << (B.empty() ? "Да" : "Нет") << endl;
-    
-    B.makenull();
-    cout << "B = ";
-    B.print();
-    
-    cout << "Множество B пустое? " << (B.empty() ? "Да" : "Нет") << endl;
+//
+//    cout << "Множество B пустое? " << (B.empty() ? "Да" : "Нет") << endl;
+//
+//    B.makenull();
+//    cout << "B = ";
+//    B.print();
+//
+//    cout << "Множество B пустое? " << (B.empty() ? "Да" : "Нет") << endl;
 
-    
+    //    A.merge(B);
+    //    cout << "A(merge) = ";
+    //    A.print();
 }
 

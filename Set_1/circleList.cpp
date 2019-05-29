@@ -27,21 +27,6 @@ bool circleList:: set:: empty() const
     return (tail == nullptr ? true : false);
 }
 
-bool circleList:: set:: existX(int x) const {
-    node *temp = tail;
-    if (tail != nullptr)
-    {
-        do
-        {
-            if (temp->x == x) //если элемент нашелся
-                return true;
-            else
-                temp = temp->next; //не нашелся, ищем дальше по списку
-        } while (temp != tail); //пока не вернулись к изначальному элементу
-    }
-    return false;
-}
-
 int circleList:: set:: min() const {
     if (tail != nullptr)
         return tail->next->x;
@@ -54,44 +39,75 @@ int circleList:: set:: max() const {
         return tail->x;
     else
         return NULL;
-    
-    
 }
 
 circleList:: node* circleList:: set:: closestEl(int x) const
 {
-    node *temp = tail;
-    do
+//    node *temp = tail;
+//    do
+//    {
+//        if (temp->x < x && temp->next->x > x)
+//            return temp;
+//        else
+//            temp = temp->next;
+//    } while (temp != tail);
+//    return nullptr; //по идее он не может вернуть nullptr..
+    
+    node *temp = tail->next;
+    while (temp != tail)
     {
         if (temp->x < x && temp->next->x > x)
             return temp;
-        else
+        temp = temp->next;
+    }
+    return nullptr; //элемента не нашлось
+}
+
+bool circleList:: set:: existX(int x) const {
+    if (tail != nullptr) // не проверяем на пустом списке
+    {
+        node *temp = tail->next;
+        while (temp != tail) //пока не дошли до конца списка
+        {
+            if (temp->x == x)
+                return true;
             temp = temp->next;
-    } while (temp != tail);
-    return nullptr; //по идее он не может вернуть nullptr..
+        }
+    }
+    return false;
+}
+
+void circleList:: set:: addElemToSet(int x)
+{
+    
 }
 
 void circleList:: set:: insert(int x)
 {
     if (existX(x) != true) //если x еще нет в списке
     {
+        //вставка в пустой
         if (tail == nullptr) //если список пуст
         {
-            tail = new node(x, tail); //создаем первый элемент
+            tail = new node();
+            tail->x = x;
             return;
         }
         
         int min = tail->next->x, max = tail->x;
-        if (x > max || x < min) //всегда добавляется после tail
+        
+        //вставка "в конец"
+        if (x > max || x < min) //Если элемент меньше меньшего или больше большего, то он всегда добавляется после tail
         {
-            node *el = new node(x, tail->next);
-            tail->next = el;
+            node *el = new node(x, tail->next); //вставка после tail
+            tail->next = el; //связали tail с новым элементом
             if (x > max)
                 tail = tail->next; //если значение больше max, то он становится новым хвостом
             return;
         }
         
-        node* elem_before_x = closestEl(x);
+        //вставка "в середину"
+        node *elem_before_x = closestEl(x);
         node *el = new node(x, elem_before_x->next); //связали новый элемент с тем, что идет после предыдущего
         elem_before_x->next = el; //связали предыдущий с новым элементом
     }
@@ -149,11 +165,25 @@ void circleList:: set:: del(int x)
 
 void circleList:: set:: print() const
 {
-    node* temp = tail;
-    do
+//    node* temp = tail;
+//    do
+//    {
+//        std::cout << temp->x << " ";
+//        if (temp->next != nullptr) // если мн-во состоит больше чем из одного элемента
+//            temp = temp->next;
+//    } while (temp != tail);
+    
+    if (tail->next != nullptr)
     {
-        std::cout << temp->x << " ";
-        if (temp->next != nullptr) // если мн-во состоит больше чем из одного элемента
+        node *temp = tail->next;
+        while (temp != tail)
+        {
+            cout << temp->x << " ";
             temp = temp->next;
-    } while (temp != tail);
+        }
+        cout << temp->x << " ";
+        cout << endl;
+    }
+    else
+        cout << "Пустое" << endl;
 }

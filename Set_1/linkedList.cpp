@@ -53,11 +53,14 @@ linkedList:: set:: set(const set &s) //копирующий конструкто
 
 bool linkedList:: set:: existX(int x) const {
     node *temp = head;
-    while (temp != nullptr) //пока не дошли до конца списка
+    if (head != nullptr) //не проверяем на пустом списке
     {
-        if (temp->x == x)
-            return true;
-        temp = temp->next;
+        while (temp != nullptr) //пока не дошли до конца списка
+        {
+            if (temp->x == x)
+                return true;
+            temp = temp->next;
+        }
     }
     return false;
 }
@@ -196,12 +199,12 @@ linkedList:: set linkedList:: set:: unite(const set &b) //объединение
                 
                 c_temp = c_temp->next; //иначе ищем совпадение дальше. переходим к следующему из с
             }
-            if (same == false) //если элемент не нашелся -> добавляем в c
+            if (same == false) //если элемент не нашелся -> добавляем его в c
             {
                 c.addElemAfterPosition(b_temp->x, c_tail); //добавляем элемент в множество после c_tail
                 c_tail = c_tail->next; //смещаем хвост
             }
-            same = true;
+            same = false;
             c_temp = c.head; //возвращаем temp в начало множества
             b_temp = b_temp->next;
         }
@@ -333,9 +336,48 @@ bool linkedList:: set:: empty() const
     return head == nullptr;
 }
 
+linkedList:: set& linkedList:: set:: merge(const set &b)
+{
+//    if (checkIntersectability() == false) // используется только на непересекающихся множествах
+    {
+        node *tail = searchLast(); //находим последний элемент мн-ва А
+        node *b_temp = b.head;
+        while (b_temp != nullptr) //пока не прошлись по всему b
+        {
+            addElemAfterPosition(b_temp->x, tail);
+            tail = tail->next;
+        }
+    }
+    return *this;
+}
+
+//linkedList:: set& linkedList:: set:: find(const set &b, int x) const
+//{
+//
+//}
+
 //bool linkedList:: set:: equal(const set &b) const
 //{
 //
 //}
+
+//bool linkedList:: set:: member(int x) const
+//{
+//
+//}
+
+//linkedList:: set& linkedList:: set:: assign(const set &b)
+//{
+//
+//}
+
+//bool linkedList:: set:: checkIntersectability() const
+//{
+//
+//}
+
+
+
+
 
 
