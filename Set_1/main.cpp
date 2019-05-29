@@ -158,10 +158,10 @@ int main(int argc, const char * argv[]) {
 //    cout << "B = ";
 //    B.print();
 //
-//    delElem(A);
-//    cout << "A = ";
-//    A.print();
-//
+    delElem(A);
+    cout << "A = ";
+    A.print();
+
 //    delElem(B);
 //    cout << "B = ";
 //    B.print();

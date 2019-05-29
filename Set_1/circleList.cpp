@@ -115,14 +115,21 @@ void circleList:: set:: insert(int x)
 
 circleList:: node* circleList:: set:: searchPrev(node *el) const
 {
-    node *temp = tail;
-    do
+    node *temp = tail->next;
+    while (temp != tail)
     {
         if (temp->next == el) //если нашли такую позицию
             return temp;
         temp = temp->next;
-    } while (temp != tail);
-    return nullptr; //не нашли
+    }
+    return nullptr;
+//    do
+//    {
+//        if (temp->next == el) //если нашли такую позицию
+//            return temp;
+//        temp = temp->next;
+//    } while (temp != tail);
+//    return nullptr; //не нашли
 }
 
 circleList:: node* circleList:: set:: searchX(int x) const
@@ -142,24 +149,62 @@ void circleList:: set:: del(int x)
 {
     if (existX(x) == true) //если x есть в списке
     {
-        if (x == min())
+        node *temp;
+        //удаление головы
+       
+        if (x == tail->next->x)
         {
-            tail->next = tail->next->next; //меняем tail->next
-            delete tail->next;
+            cout << "Удаляю голову" << endl;
+            temp = tail->next; //храним значение, чтобы в дальнейшем иметь к нему доступ для удаления
+            tail->next = tail->next->next; //меняем указатель next хвоста на следующий после удаляемой головы
+            delete temp; //удаляем содержимое и указатель предыдущей головы
+            return;
         }
-        if (x == max())
+        //удаление хвоста
+        if (x == tail->x)
         {
-            node* prev = searchPrev(tail);
-            prev->next = tail->next; //скрепили предыдущий от максимального со следующим от него
-            node *temp = tail;
-            tail = tail->next;
-            delete temp;
+            cout << "Удаляю хвост" << endl;
+            if (tail->next == tail) //если в списке один элемент
+            {
+                delete tail;
+                tail = nullptr;
+            }
+            else
+            {
+                temp = tail; //храним значение, чтобы в дальнейшем иметь к нему доступ для удаления
+                node* prev = searchPrev(tail); //ищем предыдущий от хвоста
+                prev->next = tail->next; //скрепили предыдущий от максимального(хвоста) со следующим от него
+                tail = prev;
+                delete temp; //удаляем содержимое и указатель предыдущего tail
+                return;
+            }
         }
-        
-        node *temp = searchX(x);
-        node* prev = searchPrev(temp);
-        prev->next = temp->next;
+        //удаление "из середины"
+        cout << "Удаляю прост))" << endl;
+        temp = searchX(x); //ищем, где находится элемент в списке
+        node *prev = searchPrev(temp); //ищем предыдущий от temp
+        prev->next = temp->next; //скрепляем предыдущий со следующим от темп
         delete temp;
+        
+        
+//        if (x == min())
+//        {
+//            tail->next = tail->next->next; //меняем tail->next
+//            delete tail->next;
+//        }
+//        if (x == max())
+//        {
+//            node* prev = searchPrev(tail);
+//            prev->next = tail->next; //скрепили предыдущий от максимального со следующим от него
+//            node *temp = tail;
+//            tail = tail->next;
+//            delete temp;
+//        }
+//
+//        node *temp = searchX(x);
+//        node* prev = searchPrev(temp);
+//        prev->next = temp->next;
+//        delete temp;
     }
 }
 
