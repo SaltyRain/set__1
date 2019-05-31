@@ -61,8 +61,12 @@ namespace circleList {
         node* searchPrevByPosition(node *el) const; //поиск предыдущего по позиции
         node* searchX(int x) const; //ищет местоположение x в списке
         
-        void addFirstElem(int x);
-        void insertInMiddleOrInTail(int x);
+        void insertFirstElem(int x);
+        void insertInMiddle(int x);
+        void insertInTail(int x);
+        void insertInHead(int x);
+
+        void insertInPositionInNonEmpty(int x);
         void insertInPosition(int x);
         
         
