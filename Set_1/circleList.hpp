@@ -31,13 +31,13 @@ namespace circleList {
         ~set();
         set(const set &s); //копирующий конструктор
         
-        set unite(const set& b); //объединение множеств
-        set intersection(const set& b); //пересечение множеств
-        set difference(const set& b); //разность множеств
+        set unite(const set &b); //объединение множеств
+        set intersection(const set &b); //пересечение множеств
+        set difference(const set &b); //разность множеств
         
-        set& find(const set& b, int x) const; //поиск элемента x в мн-вах this и b. Возвращаем ссылку на множество, в котором находится элемент или ссылку фиктивного пустого множества
-        set& merge(const set& b); //"слить" два множества в одно. возвращаем ссылку на новое множество
-        set& assign(const set& b); //присваивание множеству this множество b
+        set& find(const set &b, int x) const; //поиск элемента x в мн-вах this и b. Возвращаем ссылку на множество, в котором находится элемент или ссылку фиктивного пустого множества
+        set& merge(const set &b); //"слить" два множества в одно. возвращаем ссылку на новое множество
+        set& assign(const set &b); //присваивание множеству this множество b
         
         void makenull(); //сделать множество пустым
         void insert(int x); //вставка элемента x в множество
@@ -56,11 +56,17 @@ namespace circleList {
         
         bool existX(int x) const; //ищет x во множестве, если находит возвращает true
         
-        void addElemToSet(int x); //добавление элемента к множеству
         
-        node* closestEl(int x) const; //ищет ближайший к x элемент в множестве и возвращает его положение
-        node* searchPrev(node* el) const; //поиск предыдущего элемента от el
+        node* searchPrevByValue(int x) const; //Поиск предыдущего по значению
+        node* searchPrevByPosition(node *el) const; //поиск предыдущего по позиции
         node* searchX(int x) const; //ищет местоположение x в списке
+        
+        void addFirstElem(int x);
+        void insertInMiddleOrInTail(int x);
+        void insertInPosition(int x);
+        
+        
+        set& checkIfOneEnds(node *temp1, node *temp2, node *temp1tail); //проверка множеств если одно закончилось, но в другом есть элементы меньше хвоста закончившегося мн-ва
     };
 }
 

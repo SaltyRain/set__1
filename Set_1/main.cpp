@@ -111,40 +111,43 @@ void menu(set& setName)
 
 
 int main(int argc, const char * argv[]) {
-//    set A;
+    set A, B;
 //    insertElem(A);
 //    cout << "A = ";
 //    A.print();
 //
-//    set B;
 //    insertElem(B);
 //    cout << "B = ";
 //    B.print();
     
-    set A, B;
+
     readSetFromFile("A.txt", A);
-//    readSetFromFile("B.txt", B);
-//
+    readSetFromFile("B.txt", B);
+
     cout << "A = ";
     A.print();
-//
-//    cout << "B = ";
-//    B.print();
+
+    cout << "B = ";
+    B.print();
+    
+//    set C = A;
+//    cout << "C = ";
+//    C.print();
     
 //    set U = A.unite(B);
 //    cout << "U(объединение) = ";
 //    U.print();
 //
-//    set C = A.intersection(B);
-//    cout << "C(пересечение) = ";
-//    C.print();
+    set C = A.intersection(B);
+    cout << "C(пересечение) = ";
+    C.print();
 //
 //    set D = A.difference(B);
 //    cout << "D(разность) = ";
 //    D.print();
     
 //
-//    cout << "min A = " << A.max() << endl;
+//    cout << "min A = " << A.min() << endl;
 //    cout << "max A = " << A.max() << endl;
 //
 //    cout << "min B = " << B.min() << endl;
@@ -158,9 +161,9 @@ int main(int argc, const char * argv[]) {
 //    cout << "B = ";
 //    B.print();
 //
-    delElem(A);
-    cout << "A = ";
-    A.print();
+//    delElem(A);
+//    cout << "A = ";
+//    A.print();
 
 //    delElem(B);
 //    cout << "B = ";
