@@ -182,6 +182,41 @@ void circleList:: set:: del(int x)
 }
 
 
+circleList:: set circleList:: set:: unite(const set &b)
+{
+    if (tail == nullptr) // если множество А пустое
+    {
+        set c(b); //копируем множество В т.к. А пустое
+        return c; // возвращаем множество В
+    }
+    
+    if (this != &b) //если А и Б - не одно и то же множество (c = a.unite(a))
+    {
+        set c(*this); //копируем А в C
+        
+        if (b.tail == nullptr) //если Б пустое или множества эквивалентны
+            return c;
+        
+        node *temp_b = b.tail->next;
+        while (temp_b != b.tail) //пока не прошлись по всему B
+        {
+            if (temp_b->x > tail->x) //если значение из B больше хвоста А
+            {
+                c.insertInMiddleOrInTail(temp_b->x);
+                temp_b = temp_b->next;
+            }
+            if (temp_b < tail->next->x) //если значение из B меньше головы А
+            {
+                c.addFirstElem(<#int x#>)
+            }
+        }
+        
+    }
+    return *this;
+}
+
+
+
 circleList:: set& circleList:: set:: checkIfOneEndsMached(node *temp1, node *temp2, node *temp1tail)
 {
     while (temp1 != temp1tail && (temp2->x >= temp1->x)) //пока не закончилось N-e мн-во и пока значение из N множества не больше зн-я из M
