@@ -182,7 +182,7 @@ void circleList:: set:: del(int x)
 }
 
 
-circleList:: set& circleList:: set:: checkIfOneEnds(node *temp1, node *temp2, node *temp1tail)
+circleList:: set& circleList:: set:: checkIfOneEndsMached(node *temp1, node *temp2, node *temp1tail)
 {
     while (temp1 != temp1tail && (temp2->x >= temp1->x)) //пока не закончилось N-e мн-во и пока значение из N множества не больше зн-я из M
     {
@@ -198,7 +198,6 @@ circleList:: set& circleList:: set:: checkIfOneEnds(node *temp1, node *temp2, no
     
     return *this;
 }
-
 
 
 circleList:: set circleList:: set:: intersection(const set &b)
@@ -247,16 +246,33 @@ circleList:: set circleList:: set:: intersection(const set &b)
 
         //Если первое множество закончилось, но значение текущего во втором множестве меньше хвоста первого (А: 1,2,3,8,11 B: 1,3,5,8,10,11)
         if (temp_a == tail && (temp_b->x <= temp_a->x))
-            c.checkIfOneEnds(temp_b, temp_a, b.tail);
+            c.checkIfOneEndsMached(temp_b, temp_a, b.tail);
 
 
         //Если закончилось второе, но значение текущего из первого меньше хвоста второго (множества наоборот)
         if (temp_b == tail && (temp_a->x <= temp_b->x))
-            c.checkIfOneEnds(temp_a, temp_b, tail);
+            c.checkIfOneEndsMached(temp_a, temp_b, tail);
 
         return c;
     }
     return *this; //множества одинаковы - возвращаем одно из них
+}
+
+circleList:: set& circleList:: set:: checkIfOneEndsNotMached(node *temp1, node *temp2, node *temp1tail)
+{
+    while (temp1 != temp1tail && (temp2->x >= temp1->x)) //пока не закончилось N-e мн-во и пока значение из N множества не больше зн-я из M
+    {
+        if (temp1->x != temp2->x) //нашли совпавшие значения
+        {
+            insertInPosition(temp1->x);
+            return *this;
+        }
+        temp1 = temp1->next; //ищем дальше
+    }
+    if (temp1->x == temp2->x) //нашли совпавшие значения
+        insertInPosition(temp1->x);
+    
+    return *this;
 }
 
 circleList:: set circleList:: set:: difference(const set &b) //разность мн-в
@@ -272,7 +288,44 @@ circleList:: set circleList:: set:: difference(const set &b) //разность 
         node *temp_a = tail->next;
         node *temp_b = b.tail->next;
         
+        while (temp_a != tail && (temp_a->x <= b.tail->x) && (temp_b->x <= tail->x) && temp_b != tail) // пока не закончилось первое множество и пока текущий элемент из А меньше или равен хвосту B (А: 1,2,3,9, 10 В:2,4,5 - дойдет до 2 в А и прервется) и пока текущий из В меньше или равен хвосту А (А: 12, 23, 24, 48, 54, 66 В: 12, 13, 47) или пока не закончилось B
+        {
+            if (temp_a->x < temp_b->x) //если значение из а меньше текущего из B значит точно в B не будет текущего из А значит его можно добавить в С и двигаться дальше по А
+            {
+                c.insertInPosition(temp_a->x);
+                temp_a = temp_a->next;
+                continue;
+            }
+            
+            if (temp_a->x > temp_b->x) //если значение из А больше значения из В значит в В мы уже точно не найдем значение из А -> двигаемся дальше по В
+            {
+                temp_b = temp_b->next;
+                continue;
+            }
+            
+            //значения равны -> двигаемся дальше по обоим спискам
+            temp_a = temp_a->next;
+            temp_b = temp_b->next;
+        }
         
+        //проверка хвостов
+        if (temp_a == tail && temp_b == b.tail) //если оба указателя указывают на хвосты списков
+        {
+            if (temp_a->x != temp_b->x) //если значения не совпадают
+                c.insertInPosition(temp_a->x);
+            return c;
+        }
+        
+        //Если первое множество закончилось, но значение текущего во втором множестве меньше хвоста первого (А: 1,2,3,8,11 B: 1,3,5,8,10,11)
+        if (temp_a == tail && (temp_b->x <= temp_a->x))
+            c.checkIfOneEndsNotMached(temp_b, temp_a, b.tail);
+        
+        
+        //Если закончилось второе, но значение текущего из первого меньше хвоста второго (множества наоборот)
+        if (temp_b == tail && (temp_a->x <= temp_b->x))
+            c.checkIfOneEndsNotMached(temp_a, temp_b, tail);
+        
+        return c;
     }
     return c;
 }

@@ -120,7 +120,6 @@ int main(int argc, const char * argv[]) {
 //    cout << "B = ";
 //    B.print();
     
-
     readSetFromFile("A.txt", A);
     readSetFromFile("B.txt", B);
 
@@ -129,6 +128,7 @@ int main(int argc, const char * argv[]) {
 
     cout << "B = ";
     B.print();
+    
     
 //    set C = A;
 //    cout << "C = ";
@@ -141,10 +141,10 @@ int main(int argc, const char * argv[]) {
     set C = A.intersection(B);
     cout << "C(пересечение) = ";
     C.print();
-//
-//    set D = A.difference(B);
-//    cout << "D(разность) = ";
-//    D.print();
+
+    set D = A.difference(B);
+    cout << "D(разность) = ";
+    D.print();
     
 //
 //    cout << "min A = " << A.min() << endl;

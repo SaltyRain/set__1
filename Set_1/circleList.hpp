@@ -66,7 +66,8 @@ namespace circleList {
         void insertInPosition(int x);
         
         
-        set& checkIfOneEnds(node *temp1, node *temp2, node *temp1tail); //проверка множеств если одно закончилось, но в другом есть элементы меньше хвоста закончившегося мн-ва
+        set& checkIfOneEndsMached(node *temp1, node *temp2, node *temp1tail); //проверка множеств если одно закончилось, но в другом есть элементы меньше хвоста закончившегося мн-ва (совпавшие элементы)
+        set& checkIfOneEndsNotMached(node *temp1, node *temp2, node *temp1tail); //проверка множеств если одно закончилось, но в другом есть элементы меньше хвоста закончившегося мн-ва (несовпавшие элементы)
     };
 }
 
