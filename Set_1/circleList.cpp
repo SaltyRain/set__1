@@ -73,6 +73,8 @@ bool circleList:: set:: existX(int x) const {
                 return true;
             temp = temp->next;
         }
+        if (temp->x == x)
+            return true;
     }
     return false;
 }
@@ -100,6 +102,7 @@ void circleList:: set:: insert(int x)
         if (x > max || x < min) //Если элемент меньше меньшего или больше большего, то он всегда добавляется после tail
         {
             node *el = new node(x, tail->next); //вставка после tail
+            el->next = tail->next;
             tail->next = el; //связали tail с новым элементом
             if (x > max)
                 tail = tail->next; //если значение больше max, то он становится новым хвостом
@@ -150,20 +153,19 @@ void circleList:: set:: del(int x)
     if (existX(x) == true) //если x есть в списке
     {
         node *temp;
+        
         //удаление головы
-       
         if (x == tail->next->x)
         {
-            cout << "Удаляю голову" << endl;
             temp = tail->next; //храним значение, чтобы в дальнейшем иметь к нему доступ для удаления
             tail->next = tail->next->next; //меняем указатель next хвоста на следующий после удаляемой головы
             delete temp; //удаляем содержимое и указатель предыдущей головы
             return;
         }
+        
         //удаление хвоста
         if (x == tail->x)
         {
-            cout << "Удаляю хвост" << endl;
             if (tail->next == tail) //если в списке один элемент
             {
                 delete tail;
@@ -179,32 +181,12 @@ void circleList:: set:: del(int x)
                 return;
             }
         }
+        
         //удаление "из середины"
-        cout << "Удаляю прост))" << endl;
         temp = searchX(x); //ищем, где находится элемент в списке
         node *prev = searchPrev(temp); //ищем предыдущий от temp
         prev->next = temp->next; //скрепляем предыдущий со следующим от темп
         delete temp;
-        
-        
-//        if (x == min())
-//        {
-//            tail->next = tail->next->next; //меняем tail->next
-//            delete tail->next;
-//        }
-//        if (x == max())
-//        {
-//            node* prev = searchPrev(tail);
-//            prev->next = tail->next; //скрепили предыдущий от максимального со следующим от него
-//            node *temp = tail;
-//            tail = tail->next;
-//            delete temp;
-//        }
-//
-//        node *temp = searchX(x);
-//        node* prev = searchPrev(temp);
-//        prev->next = temp->next;
-//        delete temp;
     }
 }
 
