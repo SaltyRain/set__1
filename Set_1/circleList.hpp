@@ -62,14 +62,11 @@ namespace circleList {
         node* searchX(int x) const; //ищет местоположение x в списке
         
         void insertFirstElem(int x);
-        void insertInMiddle(int x);
-        void insertInTail(int x);
-        void insertInHead(int x);
+        void insertInEnd(int x);
 
-        void insertInPositionInNonEmpty(int x);
         void insertInPosition(int x);
         
-        
+        void inserting(int x, node *position);
         set& checkIfOneEnds(node *temp1, node *temp2, node *temp1tail); //проверка множеств если одно закончилось, но в другом есть элементы меньше хвоста закончившегося мн-ва (совпавшие элементы)
         
         bool equalValues(node *tail1, node *tail2) const; //проверка на совпадение значений множеств (разные адреса, одинаковые значения)

@@ -45,77 +45,35 @@ circleList:: node* circleList:: set:: searchPrevByPosition(node *el) const
     return nullptr;
 }
 
-void circleList:: set:: insertFirstElem(int x) //добавление первого элемента
+void circleList:: set:: insertFirstElem(int x)
+ // Вставка в пустое множество
 {
     tail = new node();
     tail->x = x;
 }
 
-void circleList:: set:: insertInMiddle(int x) //вставка "в середину"
-{
-    node *elem_before_x = searchPrevByValue(x);
-    node *el = new node(x, elem_before_x->next); //связали новый элемент с тем, что идет после предыдущего
-    elem_before_x->next = el; //связали предыдущий с новым элементом
-}
 
-void circleList:: set:: insertInTail(int x)
+void circleList:: set:: insertInEnd(int x)
+// вставка "в конец"
 {
-    node *el = new node(x, tail->next); //вставка после tail
-    el->next = tail->next;
-    tail->next = el; //связали tail с новым элементом
-    tail = tail->next; //сместили указатель хвоста
+    node *next_el = new node(x, tail->next);
+    tail->next = next_el;
 }
-
-void circleList:: set:: insertInHead(int x)
-{
-    node *el = new node(x, tail->next); //вставка после tail
-    el->next = tail->next;
-    tail->next = el; //связали tail с новым элементом
-}
-
 
 void circleList:: set:: insertInPosition(int x) //вставка в позицию
 {
-    if (tail == nullptr) //вставка в пустой список
+    // Вставка в пустое множество
+    if (tail == nullptr)
     {
-        insertFirstElem(x);
-        return;
+        tail = new node();
+        tail->x = x;
     }
-    
-    int min = tail->next->x, max = tail->x;
-    
-    if (x < min) //x меньше всех -> вставляется в голову
+    else // вставка "в конец"
     {
-        insertInHead(x);
-        return;
+        node *next_el = new node(x, tail->next);
+        tail->next = next_el;
+        tail = tail->next;
     }
-    
-    if (x > max) //x больше всех -> вставка в хвост
-    {
-        insertInTail(x);
-        return;
-    }
-    
-    insertInMiddle(x); //вставка в середину
-}
-
-void circleList:: set:: insertInPositionInNonEmpty(int x) //вставка в позицию зная, что множество не пустое
-{
-    int min = tail->next->x, max = tail->x;
-    
-    if (x < min) //x меньше всех -> вставляется в голову
-    {
-        insertInHead(x);
-        return;
-    }
-    
-    if (x > max) //x больше всех -> вставка в хвост
-    {
-        insertInTail(x);
-        return;
-    }
-    
-    insertInMiddle(x); //вставка в середину
 }
 
 
@@ -136,7 +94,7 @@ circleList:: set:: set(const set &s)
         
         while (temp2 != s.tail) //пока не закончился исходный список
         {
-            insertInPositionInNonEmpty(temp2->x);
+            insert(temp2->x);
             temp2 = temp2->next;
         }
     }
@@ -164,7 +122,38 @@ bool circleList:: set:: existX(int x) const  //существует ли х?
 void circleList:: set:: insert(int x)
 {
     if (existX(x) != true) //если x еще нет в списке
-        insertInPosition(x);
+    {
+        if (tail == nullptr) //вставка в пустой список
+        {
+            tail = new node();
+            tail->x = x;
+            return;
+        }
+        
+        int min = tail->next->x, max = tail->x;
+        
+        if (x < min) //x меньше всех -> вставляется в голову
+        {
+            node *el = new node(x, tail->next); //вставка после tail
+            el->next = tail->next;
+            tail->next = el; //связали tail с новым элементом
+            return;
+        }
+        
+        if (x > max) //x больше всех -> вставка в хвост
+        {
+            node *el = new node(x, tail->next); //вставка после tail
+            el->next = tail->next;
+            tail->next = el; //связали tail с новым элементом
+            tail = tail->next; //сместили указатель хвоста
+            return;
+        }
+        
+        //вставка в середину
+        node *elem_before_x = searchPrevByValue(x);
+        node *el = new node(x, elem_before_x->next); //связали новый элемент с тем, что идет после предыдущего
+        elem_before_x->next = el; //связали предыдущий с новым элементом
+    }
 }
 
 circleList:: node* circleList:: set:: searchX(int x) const
@@ -222,39 +211,73 @@ void circleList:: set:: del(int x)
     }
 }
 
-//
-//circleList:: set circleList:: set:: unite(const set &b)
-//{
-//    if (tail == nullptr) // если множество А пустое
-//    {
-//        set c(b); //копируем множество В т.к. А пустое
-//        return c; // возвращаем множество В
-//    }
-//
-//    if (this != &b) //если А и Б - не одно и то же множество (c = a.unite(a))
-//    {
-//        set c(*this); //копируем А в C
-//
-//        if (b.tail == nullptr) //если Б пустое или множества эквивалентны
-//            return c;
-//
-//        node *temp_b = b.tail->next;
-////        while (temp_b != b.tail) //пока не прошлись по всему B
-////        {
-////            if (temp_b->x > tail->x) //если значение из B больше хвоста А
-////            {
-////                c.insertInMiddleOrInTail(temp_b->x);
-////                temp_b = temp_b->next;
-////            }
-////            if (temp_b < tail->next->x) //если значение из B меньше головы А
-////            {
-////
-////            }
-//        }
-//
-//    }
-//    return *this;
-//}
+
+circleList:: set circleList:: set:: unite(const set &b)
+{
+    if (tail == nullptr) // если множество А пустое
+    {
+        set c(b); //копируем множество В т.к. А пустое
+        return c; // возвращаем множество В
+    }
+
+    if (this != &b) //если А и Б - не одно и то же множество (c = a.unite(a))
+    {
+        set c(*this); //копируем А в C
+
+        if (b.tail == nullptr) //если Б пустое или множества эквивалентны
+            return c;
+        
+        node *temp_a = tail->next;
+        node *temp_b = b.tail->next;
+        
+        while (temp_b != b.tail && temp_a != tail)
+        {
+            if (temp_a->x < temp_b->x)
+            {
+                temp_a = temp_a->next;
+                continue;
+            }
+            
+            if (temp_a->x > temp_b->x)
+            {
+                cout << "жопа" << endl;
+                c.insertInEnd(temp_b->x); // не проверяем на пустоту т.к. эта проверка была ранее
+                temp_b = temp_b->next;
+                continue;
+            }
+            //равны
+            temp_a = temp_a->next;
+            temp_b = temp_b->next;
+        }
+        
+        // проверка хвостов множеств
+        cout << "хвостА: " << temp_a->x << endl;
+        cout << "хвостB: " << temp_b->x << endl;
+        
+        if (temp_b == b.tail && temp_a != tail) //проверяем хвост B со всеми оставшимися элементами из А
+        {
+            while (temp_a != tail)
+            {
+                if (temp_a->x != temp_b->x)
+                {
+                    c.insertInEnd(temp_b->x); // не проверяем на пустоту т.к. эта проверка была ранее
+                    return c;
+                }
+                temp_a = temp_a->next;
+            }
+        }
+        
+        if (temp_a == tail && temp_b == b.tail) //если оба указателя указывают на хвосты списков
+        {
+            if (temp_a->x != temp_b->x) //если значения не совпадают
+                c.insertInPosition(temp_a->x);
+            return c; //множества закончились -> возвращаем результат в с
+        }
+        
+        return c;
+    }
+    return *this;
+}
 
 
 

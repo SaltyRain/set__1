@@ -134,10 +134,10 @@ int main(int argc, const char * argv[]) {
 //    cout << "C = ";
 //    C.print();
     
-//    set U = A.unite(B);
-//    cout << "U(объединение) = ";
-//    U.print();
-//
+    set U = A.unite(B);
+    cout << "U(объединение) = ";
+    U.print();
+
     set C = A.intersection(B);
     cout << "C(пересечение) = ";
     C.print();
