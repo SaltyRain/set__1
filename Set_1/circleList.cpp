@@ -258,7 +258,7 @@ void circleList:: set:: del(int x)
 
 
 
-circleList:: set& circleList:: set:: checkIfOneEndsMached(node *temp1, node *temp2, node *temp1tail)
+circleList:: set& circleList:: set:: checkIfOneEnds(node *temp1, node *temp2, node *temp1tail)
 {
     while (temp1 != temp1tail && (temp2->x >= temp1->x)) //пока не закончилось N-e мн-во и пока значение из N множества не больше зн-я из M
     {
@@ -322,59 +322,16 @@ circleList:: set circleList:: set:: intersection(const set &b)
 
         //Если первое множество закончилось, но значение текущего во втором множестве меньше хвоста первого (А: 1,2,3,8,11 B: 1,3,5,8,10,11)
         if (temp_a == tail && (temp_b->x <= temp_a->x))
-            c.checkIfOneEndsMached(temp_b, temp_a, b.tail);
+            c.checkIfOneEnds(temp_b, temp_a, b.tail);
 
 
         //Если закончилось второе, но значение текущего из первого меньше хвоста второго (множества наоборот)
         if (temp_b == tail && (temp_a->x <= temp_b->x))
-            c.checkIfOneEndsMached(temp_a, temp_b, tail);
+            c.checkIfOneEnds(temp_a, temp_b, tail);
 
         return c;
     }
     return *this; //множества одинаковы - возвращаем одно из них
-}
-
-circleList:: set& circleList:: set:: checkIfOneEndsNotMached(node *temp1, node *temp2, node *temp1tail, node *temp2tail)
-{
-    int flag;
-    while (temp1 != temp1tail && (temp2->x >= temp1->x)) //пока не закончилось N-e мн-во и пока значение из N множества не больше зн-я из M
-    {
-        flag = 0;
-        temp2 = temp2tail; //откатили хвост
-        while (temp2->next != temp2tail)
-        {
-            if (temp1->x == temp2->x) //нашли совпавшие значения
-            {
-                //            insertInPosition(temp1->x);
-                //            return *this;
-                flag = 1;
-                break;
-            }
-            temp2 = temp2->next;
-        }
-       if (flag != 1)
-           insertInPosition(temp1->x);
-        temp1 = temp1->next;
-    }
-    //для последнего элемента
-    flag = 0;
-    temp2 = temp2tail; //откатили хвост
-    while (temp2->next != temp2tail)
-    {
-        if (temp1->x == temp2->x) //нашли совпавшие значения
-        {
-            //            insertInPosition(temp1->x);
-            //            return *this;
-            flag = 1;
-            break;
-        }
-        temp2 = temp2->next;
-    }
-    if (flag != 1)
-        insertInPosition(temp1->x);
-    temp1 = temp1->next;
-    
-    return *this;
 }
 
 circleList:: set circleList:: set:: difference(const set &b) //разность мн-в
@@ -390,7 +347,7 @@ circleList:: set circleList:: set:: difference(const set &b) //разность 
         node *temp_a = tail->next;
         node *temp_b = b.tail->next;
         
-        while (temp_a != tail && (temp_a->x <= b.tail->x) && (temp_b->x <= tail->x) && temp_b != tail) // пока не закончилось первое множество и пока текущий элемент из А меньше или равен хвосту B (А: 1,2,3,9, 10 В:2,4,5 - дойдет до 2 в А и прервется) и пока текущий из В меньше или равен хвосту А (А: 12, 23, 24, 48, 54, 66 В: 12, 13, 47) или пока не закончилось B
+        while (temp_a != tail && (temp_a->x < b.tail->x) && (temp_b->x < tail->x) && temp_b != tail) // пока не закончилось первое множество и пока текущий элемент из А меньше или равен хвосту B (А: 1,2,3,9, 10 В:2,4,5 - дойдет до 2 в А и прервется) и пока текущий из В меньше или равен хвосту А (А: 12, 23, 24, 48, 54, 66 В: 12, 13, 47) или пока не закончилось B
         {
             if (temp_a->x < temp_b->x) //если значение из а меньше текущего из B значит точно в B не будет текущего из А значит его можно добавить в С и двигаться дальше по А
             {
@@ -410,43 +367,70 @@ circleList:: set circleList:: set:: difference(const set &b) //разность 
             temp_b = temp_b->next;
         }
         
-//        if (temp_b == b.tail && temp_a != tail) //если второе закончилось, но в первом еще остались элементы
-//        {
-//            cout << "хуй" << endl;
-//            while (temp_a != tail)
-//            {
-//                c.insertInPosition(temp_a->x);
-//                temp_a = temp_a->next;
-//            }
-//            c.insertInPosition(temp_a->x);
-//        }
-        
         //проверка хвостов
+        
+        //одинаковые хвосты
         if (temp_a == tail && temp_b == b.tail) //если оба указателя указывают на хвосты списков
         {
-             cout << "концы" << endl;
             if (temp_a->x != temp_b->x) //если значения не совпадают
                 c.insertInPosition(temp_a->x);
             return c;
         }
         
-        cout << "конец: " << temp_a->x << endl;
-        //        //Если закончилось первое, но значение текущего из второго меньше хвоста первого
-//        if (temp_a == tail && (temp_b->x <= temp_a->x))
-//        {
-//            cout << "первое" << endl;
-//            c.checkIfOneEndsNotMached(temp_b, temp_a, b.tail, tail);
-//        }
-//
-//
-//        //Если закончилось второе, но значение текущего из первого меньше хвоста второго
-//        if (temp_b == tail )
-//        {
-//            cout << "второе" << endl;
-//            c.checkIfOneEndsNotMached(temp_a, temp_b, tail, b.tail);
-//        }
+        //первое стоит на хвосте, но во втором значение меньше значения хвоста первого
+        // A(1,2,3,49) B(1,6,7,9,22,48)
+        if (temp_a == tail && (temp_b->x < temp_a->x))
+        {
+            while (temp_b != b.tail && temp_a->x > temp_b->x) //пока не дошли до конца B или не нашли элемент больший хвостаА
+                temp_b = temp_b->next;
+            
+            // дошли до элементов в В больших или равных хвосту А -> если равны -> ничего не происходит. Если не равны -> добавляем
+            if (temp_a->x != temp_b->x)
+                c.insertInPosition(temp_a->x); //добавили несовпавший элемент
+            
+            return c;
+        }
         
+        // Элементы А стали больше чем в В значит совпадений уже не будет -> добавляем всё из А
+        if (temp_a->x > temp_b->x)
+        {
+            while (temp_a != tail)
+            {
+                c.insertInPosition(temp_a->x);
+                temp_a = temp_a->next;
+            }
+            c.insertInPosition(temp_a->x); //вставка последнего
+            return c;
+        }
         
+        //В на хвосте, но значение хвоста В больше текущего в А
+        if (temp_b == b.tail && (temp_b->x >= temp_a->x))
+        {
+            cout <<"kek"<<endl;
+            //значит надо сравнивать значения А с хвостом В пока В не закончилось, либо пока мы не найдем совпадение, либо значения А станут больше хвоста В
+            while (temp_a != tail && (temp_b->x <= temp_a->x))
+            {
+                if (temp_b->x == temp_a->x)
+                {
+                    temp_a = temp_a->next;
+                    break;
+                }
+                c.insertInPosition(temp_a->x);
+                temp_a = temp_a->next;
+                
+            }
+            // Элементы А стали больше чем в В значит совпадений уже не будет -> добавляем всё из А
+            if (temp_a->x > temp_b->x)
+            {
+                while (temp_a != tail)
+                {
+                    c.insertInPosition(temp_a->x);
+                    temp_a = temp_a->next;
+                }
+                c.insertInPosition(temp_a->x); //вставка последнего
+                return c;
+            }
+        }
     }
     return c;
 }
