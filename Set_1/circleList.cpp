@@ -334,19 +334,45 @@ circleList:: set circleList:: set:: intersection(const set &b)
     return *this; //множества одинаковы - возвращаем одно из них
 }
 
-circleList:: set& circleList:: set:: checkIfOneEndsNotMached(node *temp1, node *temp2, node *temp1tail)
+circleList:: set& circleList:: set:: checkIfOneEndsNotMached(node *temp1, node *temp2, node *temp1tail, node *temp2tail)
 {
+    int flag;
     while (temp1 != temp1tail && (temp2->x >= temp1->x)) //пока не закончилось N-e мн-во и пока значение из N множества не больше зн-я из M
     {
-        if (temp1->x != temp2->x) //нашли несовпавшие значения
+        flag = 0;
+        temp2 = temp2tail; //откатили хвост
+        while (temp2->next != temp2tail)
         {
-            insertInPosition(temp1->x);
-            return *this;
+            if (temp1->x == temp2->x) //нашли совпавшие значения
+            {
+                //            insertInPosition(temp1->x);
+                //            return *this;
+                flag = 1;
+                break;
+            }
+            temp2 = temp2->next;
         }
-        temp1 = temp1->next; //ищем дальше
+       if (flag != 1)
+           insertInPosition(temp1->x);
+        temp1 = temp1->next;
     }
-    if (temp1->x != temp2->x) //нашли несовпавшие значения
+    //для последнего элемента
+    flag = 0;
+    temp2 = temp2tail; //откатили хвост
+    while (temp2->next != temp2tail)
+    {
+        if (temp1->x == temp2->x) //нашли совпавшие значения
+        {
+            //            insertInPosition(temp1->x);
+            //            return *this;
+            flag = 1;
+            break;
+        }
+        temp2 = temp2->next;
+    }
+    if (flag != 1)
         insertInPosition(temp1->x);
+    temp1 = temp1->next;
     
     return *this;
 }
@@ -398,19 +424,28 @@ circleList:: set circleList:: set:: difference(const set &b) //разность 
         //проверка хвостов
         if (temp_a == tail && temp_b == b.tail) //если оба указателя указывают на хвосты списков
         {
-            cout << "жопой жуй" << endl;
+             cout << "концы" << endl;
             if (temp_a->x != temp_b->x) //если значения не совпадают
                 c.insertInPosition(temp_a->x);
             return c;
         }
         
-        //Если закончилось второе, но значение текущего из первого меньше хвоста второго
-        if (temp_a == tail && (temp_b->x <= temp_a->x))
-            c.checkIfOneEndsNotMached(temp_b, temp_a, b.tail);
+        cout << "конец: " << temp_a->x << endl;
+        //        //Если закончилось первое, но значение текущего из второго меньше хвоста первого
+//        if (temp_a == tail && (temp_b->x <= temp_a->x))
+//        {
+//            cout << "первое" << endl;
+//            c.checkIfOneEndsNotMached(temp_b, temp_a, b.tail, tail);
+//        }
+//
+//
+//        //Если закончилось второе, но значение текущего из первого меньше хвоста второго
+//        if (temp_b == tail )
+//        {
+//            cout << "второе" << endl;
+//            c.checkIfOneEndsNotMached(temp_a, temp_b, tail, b.tail);
+//        }
         
-        //Если закончилось второе, но значение текущего из первого меньше хвоста второго
-        if (temp_b == tail && (temp_a->x <= temp_b->x))
-            c.checkIfOneEndsNotMached(temp_a, temp_b, tail);
         
     }
     return c;
@@ -418,7 +453,21 @@ circleList:: set circleList:: set:: difference(const set &b) //разность 
 
 
 
-void circleList:: set:: makenull() {
+void circleList:: set:: makenull()
+{
+    if (tail != nullptr)
+    {
+        node *temp1;
+        node *temp2 = tail->next;
+        while (temp2 != tail)
+        {
+            temp1 = temp2;
+            temp2 = temp2->next;
+            delete temp1;
+        }
+        delete temp2;
+        tail = nullptr;
+    }
 }
 
 bool circleList:: set:: empty() const
@@ -434,18 +483,41 @@ int circleList:: set:: max() const {
     return tail->x;
 }
 
+bool circleList:: set:: equal(const set &b) const
+{
+    if (this == &b) //проверка по адресу
+        return true;
+    return equalValues(tail, b.tail); //проверка по значениям
+}
+
+bool circleList:: set:: equalValues(node *tail1, node *tail2) const //проверка на совпадение значений множеств (разные адреса, одинаковые значения)
+{
+    if (tail1 == nullptr && tail2 == nullptr) //пустые множества не равны
+        return false;
+    if (tail1->x != tail2->x) //проверка конечных значений
+        return false;
+    
+    node *temp1 = tail1->next;
+    node *temp2 = tail2->next;
+    
+    while (temp1 != tail && temp2 != tail) //пока не закончились оба множества
+    {
+        if (temp1->x != temp2->x) //нашли разные значения
+            return false;
+        temp1 = temp1->next;
+        temp2 = temp2->next;
+    }
+    
+    //если одно из мн-в закончилось (пр. А(1,2,3) В(1,2,3,4)
+    if (temp1 != tail || temp2 != tail) //если в хотя-бы одном из множеств мы не дошли до конца (следовательно где-то значения не совпали)
+        return false;
+    else
+        return true;
+}
 
 void circleList:: set:: print() const
 {
-//    node* temp = tail;
-//    do
-//    {
-//        std::cout << temp->x << " ";
-//        if (temp->next != nullptr) // если мн-во состоит больше чем из одного элемента
-//            temp = temp->next;
-//    } while (temp != tail);
-    
-    if (tail->next != nullptr)
+    if (tail != nullptr)
     {
         node *temp = tail->next;
         while (temp != tail)

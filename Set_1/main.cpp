@@ -180,5 +180,9 @@ int main(int argc, const char * argv[]) {
     //    A.merge(B);
     //    cout << "A(merge) = ";
     //    A.print();
+    
+    A.makenull();
+    cout << "A = ";
+    A.print();
 }
 

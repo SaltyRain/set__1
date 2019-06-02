@@ -71,7 +71,9 @@ namespace circleList {
         
         
         set& checkIfOneEndsMached(node *temp1, node *temp2, node *temp1tail); //проверка множеств если одно закончилось, но в другом есть элементы меньше хвоста закончившегося мн-ва (совпавшие элементы)
-        set& checkIfOneEndsNotMached(node *temp1, node *temp2, node *temp1tail); //проверка множеств если одно закончилось, но в другом есть элементы меньше хвоста закончившегося мн-ва (несовпавшие элементы)
+        set& checkIfOneEndsNotMached(node *temp1, node *temp2, node *temp1tail, node *temp2tail); //проверка множеств если одно закончилось, но в другом есть элементы меньше хвоста закончившегося мн-ва (несовпавшие элементы)
+        
+        bool equalValues(node *tail1, node *tail2) const; //проверка на совпадение значений множеств (разные адреса, одинаковые значения)
     };
 }
 
