@@ -117,8 +117,6 @@ bool circleList:: set:: existX(int x) const  //существует ли х?
     return false;
 }
 
-
-
 void circleList:: set:: insert(int x)
 {
     if (existX(x) != true) //если x еще нет в списке
@@ -222,59 +220,95 @@ circleList:: set circleList:: set:: unite(const set &b)
 
     if (this != &b) //если А и Б - не одно и то же множество (c = a.unite(a))
     {
-        set c(*this); //копируем А в C
+//        set c(*this); //копируем А в C
 
         if (b.tail == nullptr) //если Б пустое или множества эквивалентны
+            return *this;
+        
+        if (tail->next->x < b.tail->x) //голова первого больше хвоста второго -> мн-ва не пересекаются -> сливаем в одно
+        {
+            set c(b); //сначала добавляем меньшие из В
+            node *temp = tail->next;
+            while (temp != tail)
+            {
+                c.insertInEnd(temp->x);
+                temp = temp->next;
+            }
+            c.insertInEnd(temp->x);
             return c;
-        
-        node *temp_a = tail->next;
-        node *temp_b = b.tail->next;
-        
-        while (temp_b != b.tail && temp_a != tail)
-        {
-            if (temp_a->x < temp_b->x)
-            {
-                temp_a = temp_a->next;
-                continue;
-            }
-            
-            if (temp_a->x > temp_b->x)
-            {
-                cout << "жопа" << endl;
-                c.insertInEnd(temp_b->x); // не проверяем на пустоту т.к. эта проверка была ранее
-                temp_b = temp_b->next;
-                continue;
-            }
-            //равны
-            temp_a = temp_a->next;
-            temp_b = temp_b->next;
         }
         
-        // проверка хвостов множеств
-        cout << "хвостА: " << temp_a->x << endl;
-        cout << "хвостB: " << temp_b->x << endl;
-        
-        if (temp_b == b.tail && temp_a != tail) //проверяем хвост B со всеми оставшимися элементами из А
+        if (b.tail->next->x < tail->x) //голова второго больше хвоста первого -> мн-ва не пересекаются -> сливаем в одно
         {
-            while (temp_a != tail)
+            set c(*this); //Добавляем меньшее А
+            node *temp = b.tail->next;
+            while (temp != b.tail)
             {
-                if (temp_a->x != temp_b->x)
-                {
-                    c.insertInEnd(temp_b->x); // не проверяем на пустоту т.к. эта проверка была ранее
-                    return c;
-                }
-                temp_a = temp_a->next;
+                c.insertInEnd(temp->x);
+                temp = temp->next;
             }
+            c.insertInEnd(temp->x);
+            return c;
         }
         
-        if (temp_a == tail && temp_b == b.tail) //если оба указателя указывают на хвосты списков
-        {
-            if (temp_a->x != temp_b->x) //если значения не совпадают
-                c.insertInPosition(temp_a->x);
-            return c; //множества закончились -> возвращаем результат в с
-        }
         
-        return c;
+//        node *temp_a = tail->next;
+//        node *temp_b = b.tail->next;
+//
+//        while (temp_b != b.tail && temp_a != tail) //пока не закончились оба множества
+//        {
+//            if (temp_a->x < temp_b->x)
+//            {
+//                c.insertInPosition(temp_a->x);
+//                temp_a = temp_a->next;
+//                continue;
+//            }
+//
+//            if (temp_a->x > temp_b->x)
+//            {
+//                c.insertInPosition(temp_b->x);
+//                temp_b = temp_b->next;
+//                continue;
+//            }
+//            //равны
+//            temp_a = temp_a->next;
+//            temp_b = temp_b->next;
+//        }
+//
+//        if (temp_b == b.tail && temp_a != tail) //проверяем хвост А со всеми оставшимися элементами из B
+//        {
+//            while (temp_b != tail)
+//            {
+//                if (temp_a->x != temp_b->x)
+//                {
+//                    c.insertInEnd(temp_a->x); // не проверяем на пустоту т.к. эта проверка была ранее
+//                    return c;
+//                }
+//                temp_b = temp_b->next;
+//            }
+//        }
+//
+//        if (temp_b == b.tail && temp_a != tail) //проверяем хвост B со всеми оставшимися элементами из А
+//        {
+//            while (temp_a != tail)
+//            {
+//                if (temp_a->x != temp_b->x)
+//                {
+//                    c.insertInEnd(temp_b->x); // не проверяем на пустоту т.к. эта проверка была ранее
+//                    return c;
+//                }
+//                temp_a = temp_a->next;
+//            }
+//        }
+//
+//        if (temp_a == tail && temp_b == b.tail) //если оба указателя указывают на хвосты списков
+//        {
+//            if (temp_a->x != temp_b->x) //если значения не совпадают
+//                c.insertInPosition(temp_a->x);
+//            return c; //множества закончились -> возвращаем результат в с
+//        }
+//
+//        return c;
     }
     return *this;
 }
@@ -367,6 +401,10 @@ circleList:: set circleList:: set:: difference(const set &b) //разность 
         if (b.tail == nullptr)
             return *this; //второе пустое - возвращаем мн-во А
         
+        if (tail->x < b.tail->next->x)
+        {
+            return *this;
+        }
         node *temp_a = tail->next;
         node *temp_b = b.tail->next;
         

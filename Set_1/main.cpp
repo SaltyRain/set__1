@@ -130,17 +130,17 @@ int main(int argc, const char * argv[]) {
     B.print();
     
     
-//    set C = A;
-//    cout << "C = ";
-//    C.print();
+    set C = A;
+    cout << "C = ";
+    C.print();
     
     set U = A.unite(B);
     cout << "U(объединение) = ";
     U.print();
 
-    set C = A.intersection(B);
-    cout << "C(пересечение) = ";
-    C.print();
+    set I = A.intersection(B);
+    cout << "I(пересечение) = ";
+    I.print();
 
     set D = A.difference(B);
     cout << "D(разность) = ";
