@@ -68,11 +68,11 @@
 			children = (
 				E6C3637D222F22E00048FD82 /* main.cpp */,
 				E67F41B12250132500BA707A /* linkedList.cpp */,
-				E67F41AE225012C300BA707A /* circleList.cpp */,
-				E67F41AC225011C700BA707A /* binaryMassiv.hpp */,
 				E67F41B22250132500BA707A /* linkedList.hpp */,
+				E67F41AE225012C300BA707A /* circleList.cpp */,
 				E67F41AF225012C300BA707A /* circleList.hpp */,
 				E67F41AB225011C700BA707A /* binaryMassiv.cpp */,
+				E67F41AC225011C700BA707A /* binaryMassiv.hpp */,
 			);
 			path = Set_1;
 			sourceTree = "<group>";

@@ -137,18 +137,6 @@ void linkedList:: set:: insert(int x)
         addElemToSet(x);
 }
 
-//linkedList:: node* linkedList:: set:: searchPrev(node *elem) const
-//{
-//    node* temp = head;
-//    while (temp->next != elem)
-//    {
-//        if (temp->next == elem)
-//            return temp;
-//        temp = temp->next;
-//    }
-//    return nullptr;
-//}
-
 linkedList:: node* linkedList:: set:: searchPrevByValue(int x) const
 {
     node* temp1 = head;
@@ -398,7 +386,7 @@ int linkedList:: set:: power(node *hd) const //мощность мн-ва
     return pwr;
 }
 
-bool linkedList:: set:: itemCheck(node *hd1, node *hd2) const
+bool linkedList:: set:: equalValues(node *hd1, node *hd2) const
 {
     node *temp1 = hd1;
     node *temp2 = hd2;
@@ -435,7 +423,7 @@ bool linkedList:: set:: equal(const set &b) const
         return false;
     
     //2) если мощности совпали -> поэлементная проверка
-    return itemCheck(head, b.head);
+    return equalValues(head, b.head);
 }
 
 bool linkedList:: set:: member(int x) const

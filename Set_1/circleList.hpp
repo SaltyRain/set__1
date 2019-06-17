@@ -63,17 +63,20 @@ namespace circleList {
         node* searchPrevByPosition(node *el) const; //поиск предыдущего по позиции
         node* searchX(int x) const; //ищет местоположение x в списке
         
-        void insertFirstElem(int x);
-        void insertInEnd(int x);
+        void insertFirst(int x); //вставка первого элемента списка
+        void insertInEnd(int x); //вставка "в конец"
 
-        void insertInPosition(int x);
+        void insertFirstOrInEnd(int x); //объединение предыдущих двух функций
         
+        void insertInPosition(int x); //используется цикл с поиском места вставки
         
         set& checkIfOneEnds(node *temp1, node *temp2, node *temp1tail); //проверка множеств если одно закончилось, но в другом есть элементы меньше хвоста закончившегося мн-ва (совпавшие элементы)
         
         bool equalValues(node *tail1, node *tail2) const; //проверка на совпадение значений множеств (разные адреса, одинаковые значения)
         
         void copy(set &to, const set &from);
+        void delList(node *tl); //удалить список
+        
     };
 }
 

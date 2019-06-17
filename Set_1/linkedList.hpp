@@ -54,7 +54,6 @@ namespace linkedList {
         
         bool existX(int x) const;
         node* searchLast() const; //поиск последнего элемента в множестве
-//        node* searchPrev(node* elem) const; //ищет предыдущий элемент от elem
 
         node* searchPrevByValue(int x) const; //возвращает место предыдущего элемента от x
         
@@ -64,7 +63,7 @@ namespace linkedList {
         void copy(set &to, const set &from);
         void delList(node *hd); //удалить список
         int power(node *hd) const; //мощность мн-ва
-        bool itemCheck(node *hd1, node *hd2) const; //поэлементная проверка множеств
+        bool equalValues(node *hd1, node *hd2) const; //поэлементная проверка множеств
     };
 }
 
