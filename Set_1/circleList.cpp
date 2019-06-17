@@ -19,6 +19,42 @@ circleList:: set:: ~set() {
     makenull();
 }
 
+void circleList:: set:: copy(set &to, const set &from)
+{
+    node *temp1 = nullptr; //текущий
+    node *temp2 = nullptr; //следующий
+    
+    if (from.tail == nullptr) //если копируем пустой список
+        to.tail = nullptr;
+    else
+    {
+        insertFirstElem(from.tail->x);
+        
+        temp1 = to.tail;
+        temp2 = from.tail->next;
+        
+        while (temp2 != from.tail) //пока не закончился исходный список
+        {
+            insert(temp2->x);
+            temp2 = temp2->next;
+        }
+    }
+}
+
+circleList:: set:: set(const set &s)
+{
+    copy(*this, s);
+}
+
+circleList:: set& circleList:: set:: operator=(const set &s) //перегрузка оператора присваивания
+{
+    if (this == &s) //проверка на самоприсваивание
+        return *this;
+    
+    copy(*this, s);
+    return *this;
+}
+
 circleList:: node* circleList:: set:: searchPrevByValue(int x) const //поиск предыдущего по значению
 {
     node *temp = tail->next;
@@ -78,27 +114,7 @@ void circleList:: set:: insertInPosition(int x) //вставка в позици
 
 
 
-circleList:: set:: set(const set &s)
-{
-    node *temp1 = nullptr; //текущий
-    node *temp2 = nullptr; //следующий
-    
-    if (s.tail == nullptr) //если копируем пустой список
-        tail = nullptr;
-    else
-    {
-        insertFirstElem(s.tail->x);
-        
-        temp1 = tail;
-        temp2 = s.tail->next;
-        
-        while (temp2 != s.tail) //пока не закончился исходный список
-        {
-            insert(temp2->x);
-            temp2 = temp2->next;
-        }
-    }
-}
+
 
 bool circleList:: set:: existX(int x) const  //существует ли х?
 {
@@ -250,65 +266,6 @@ circleList:: set circleList:: set:: unite(const set &b)
             c.insertInEnd(temp->x);
             return c;
         }
-        
-        
-//        node *temp_a = tail->next;
-//        node *temp_b = b.tail->next;
-//
-//        while (temp_b != b.tail && temp_a != tail) //пока не закончились оба множества
-//        {
-//            if (temp_a->x < temp_b->x)
-//            {
-//                c.insertInPosition(temp_a->x);
-//                temp_a = temp_a->next;
-//                continue;
-//            }
-//
-//            if (temp_a->x > temp_b->x)
-//            {
-//                c.insertInPosition(temp_b->x);
-//                temp_b = temp_b->next;
-//                continue;
-//            }
-//            //равны
-//            temp_a = temp_a->next;
-//            temp_b = temp_b->next;
-//        }
-//
-//        if (temp_b == b.tail && temp_a != tail) //проверяем хвост А со всеми оставшимися элементами из B
-//        {
-//            while (temp_b != tail)
-//            {
-//                if (temp_a->x != temp_b->x)
-//                {
-//                    c.insertInEnd(temp_a->x); // не проверяем на пустоту т.к. эта проверка была ранее
-//                    return c;
-//                }
-//                temp_b = temp_b->next;
-//            }
-//        }
-//
-//        if (temp_b == b.tail && temp_a != tail) //проверяем хвост B со всеми оставшимися элементами из А
-//        {
-//            while (temp_a != tail)
-//            {
-//                if (temp_a->x != temp_b->x)
-//                {
-//                    c.insertInEnd(temp_b->x); // не проверяем на пустоту т.к. эта проверка была ранее
-//                    return c;
-//                }
-//                temp_a = temp_a->next;
-//            }
-//        }
-//
-//        if (temp_a == tail && temp_b == b.tail) //если оба указателя указывают на хвосты списков
-//        {
-//            if (temp_a->x != temp_b->x) //если значения не совпадают
-//                c.insertInPosition(temp_a->x);
-//            return c; //множества закончились -> возвращаем результат в с
-//        }
-//
-//        return c;
     }
     return *this;
 }
@@ -402,9 +359,9 @@ circleList:: set circleList:: set:: difference(const set &b) //разность 
             return *this; //второе пустое - возвращаем мн-во А
         
         if (tail->x < b.tail->next->x)
-        {
             return *this;
-        }
+        
+        
         node *temp_a = tail->next;
         node *temp_b = b.tail->next;
         
@@ -467,7 +424,7 @@ circleList:: set circleList:: set:: difference(const set &b) //разность 
         //В на хвосте, но значение хвоста В больше текущего в А
         if (temp_b == b.tail && (temp_b->x >= temp_a->x))
         {
-            cout <<"kek"<<endl;
+            
             //значит надо сравнивать значения А с хвостом В пока В не закончилось, либо пока мы не найдем совпадение, либо значения А станут больше хвоста В
             while (temp_a != tail && (temp_b->x <= temp_a->x))
             {
@@ -537,8 +494,8 @@ bool circleList:: set:: equal(const set &b) const
 
 bool circleList:: set:: equalValues(node *tail1, node *tail2) const //проверка на совпадение значений множеств (разные адреса, одинаковые значения)
 {
-    if (tail1 == nullptr && tail2 == nullptr) //пустые множества не равны
-        return false;
+    if (tail1 == nullptr && tail2 == nullptr) //пустые множества эквивалентны
+        return true;
     if (tail1->x != tail2->x) //проверка конечных значений
         return false;
     

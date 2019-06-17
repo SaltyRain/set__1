@@ -27,6 +27,8 @@ namespace linkedList {
         ~set();
         set(const set &s); //копирующий конструктор
         
+        set& operator = (const set &s); //перегрузка оператора присваивания
+        
         set unite(const set& b); //объединение множеств
         set intersection(const set& b); //пересечение множеств
         set difference(const set& b); //разность множеств
@@ -58,6 +60,8 @@ namespace linkedList {
         
         void addElemToSet(int x); //добавить элемент х во множество setName
         void addElemAfterPosition(int x, node* position); // добавить элемент х после position
+        
+        void copy(set &to, const set &from);
     };
 }
 

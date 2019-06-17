@@ -38,6 +38,7 @@ void readSetFromFile (const char *filename, set &setName)
         f >> x;
         setName.insert(x);
     }
+    f.close();
 }
 
 void insertElem(set& setName)

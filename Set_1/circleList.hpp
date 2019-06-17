@@ -30,6 +30,8 @@ namespace circleList {
         set();
         ~set();
         set(const set &s); //копирующий конструктор
+        set& operator = (const set &s); //перегрузка оператора присваивания
+        
         
         set unite(const set &b); //объединение множеств
         set intersection(const set &b); //пересечение множеств
@@ -66,10 +68,12 @@ namespace circleList {
 
         void insertInPosition(int x);
         
-        void inserting(int x, node *position);
+        
         set& checkIfOneEnds(node *temp1, node *temp2, node *temp1tail); //проверка множеств если одно закончилось, но в другом есть элементы меньше хвоста закончившегося мн-ва (совпавшие элементы)
         
         bool equalValues(node *tail1, node *tail2) const; //проверка на совпадение значений множеств (разные адреса, одинаковые значения)
+        
+        void copy(set &to, const set &from);
     };
 }
 

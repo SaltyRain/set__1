@@ -19,23 +19,23 @@ linkedList:: set:: set() {
 }
 
 linkedList:: set:: ~set() {
-//    makenull();
+    makenull();
 }
 
-linkedList:: set:: set(const set &s) //копирующий конструктор
+void linkedList:: set:: copy(set &to, const set &from)
 {
     node *temp1 = nullptr; //текущий
     node *temp2 = nullptr; //следующий
     
-    if (s.head == nullptr) //если копируем пустой список
-        head = nullptr;
+    if (from.head == nullptr) //если копируем пустой список
+        to.head = nullptr;
     else
     {
-        head = new node; //выделяем память под новую голову
-        head->x = s.head->x; //скопировали данные в новую голову
+        to.head = new node; //выделяем память под новую голову
+        to.head->x = from.head->x; //скопировали данные в новую голову
         
-        temp1 = head;
-        temp2 = s.head->next;
+        temp1 = to.head;
+        temp2 = from.head->next;
         
         while (temp2 != nullptr) //пока не закончился исходный список
         {
@@ -47,8 +47,20 @@ linkedList:: set:: set(const set &s) //копирующий конструкто
         }
         temp1->next = nullptr;
     }
+}
+
+linkedList:: set:: set(const set &s) //копирующий конструктор
+{
+    copy(*this, s);
+}
+
+linkedList:: set& linkedList:: set:: operator=(const set &s) //перегрузка оператора присваивания
+{
+    if (this == &s) //проверка на самоприсваивание
+        return *this;
     
-    
+    copy(*this, s);
+    return *this;
 }
 
 bool linkedList:: set:: existX(int x) const {
@@ -175,6 +187,7 @@ linkedList:: set linkedList:: set:: unite(const set &b) //объединение
     
     if (this != &b) //если А и Б - не одно и то же множество (c = a.unite(a))
     {
+        //сделать проверку на одинаковые значения (разные множества с одинаковым содержимым)
         set c(*this);
         
         if (b.head == nullptr) //если Б пустое или множества эквивалентны
