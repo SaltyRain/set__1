@@ -33,7 +33,7 @@ namespace linkedList {
         set intersection(const set& b); //пересечение множеств
         set difference(const set& b); //разность множеств
         
-        set& find(const set& b, int x) const; //поиск элемента x в мн-вах this и b. Возвращаем ссылку на множество, в котором находится элемент или ссылку фиктивного пустого множества
+        set& find(set& b, int x); //поиск элемента x в мн-вах this и b. Возвращаем ссылку на множество, в котором находится элемент или ссылку фиктивного пустого множества
         set& merge(const set& b); //"слить" два множества в одно. возвращаем ссылку на новое множество
         set& assign(const set& b); //присваивание множеству this множество b
         
@@ -47,14 +47,14 @@ namespace linkedList {
         bool equal(const set& b) const; //эквивалентность множеств
         bool member(int x) const; //принадлежность элемента x множеству
         bool empty() const; //проверка на пустоту множества
-        bool checkIntersectability() const; //проверить мн-во на пересекаемость
+        bool checkIntersectability(const set &b) const; //проверка мн-в на пересекаемость
      
     private:
         node *head;
         
         bool existX(int x) const;
         node* searchLast() const; //поиск последнего элемента в множестве
-        node* searchPrev(node* elem) const; //ищет предыдущий элемент от elem
+//        node* searchPrev(node* elem) const; //ищет предыдущий элемент от elem
 
         node* searchPrevByValue(int x) const; //возвращает место предыдущего элемента от x
         
@@ -62,6 +62,9 @@ namespace linkedList {
         void addElemAfterPosition(int x, node* position); // добавить элемент х после position
         
         void copy(set &to, const set &from);
+        void delList(node *hd); //удалить список
+        int power(node *hd) const; //мощность мн-ва
+        bool itemCheck(node *hd1, node *hd2) const; //поэлементная проверка множеств
     };
 }
 

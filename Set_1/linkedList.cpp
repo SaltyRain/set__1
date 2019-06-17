@@ -49,6 +49,19 @@ void linkedList:: set:: copy(set &to, const set &from)
     }
 }
 
+void linkedList:: set:: delList(node *hd)
+{
+    node *temp1;
+    node *temp2 = hd;
+    while (temp2 != nullptr)
+    {
+        temp1 = temp2;
+        temp2 = temp2->next;
+        delete temp1;
+    }
+    hd = nullptr;
+}
+
 linkedList:: set:: set(const set &s) //копирующий конструктор
 {
     copy(*this, s);
@@ -58,6 +71,14 @@ linkedList:: set& linkedList:: set:: operator=(const set &s) //перегруз�
 {
     if (this == &s) //проверка на самоприсваивание
         return *this;
+    
+    if (head != nullptr) //если множество которому присваиваем не пустое
+    {
+        delList(head);
+    }
+    
+    if (s.head == nullptr) //если присваиваемое мн-во пустое
+        return *this; //возвращаем пустое мн-во
     
     copy(*this, s);
     return *this;
@@ -116,23 +137,24 @@ void linkedList:: set:: insert(int x)
         addElemToSet(x);
 }
 
-linkedList:: node* linkedList:: set:: searchPrev(node *elem) const
-{
-    node* temp = head;
-    while (temp->next != elem)
-    {
-        if (temp->next == elem)
-            return temp;
-        temp = temp->next;
-    }
-    return nullptr;
-}
+//linkedList:: node* linkedList:: set:: searchPrev(node *elem) const
+//{
+//    node* temp = head;
+//    while (temp->next != elem)
+//    {
+//        if (temp->next == elem)
+//            return temp;
+//        temp = temp->next;
+//    }
+//    return nullptr;
+//}
 
 linkedList:: node* linkedList:: set:: searchPrevByValue(int x) const
 {
     node* temp1 = head;
     node* temp2 = nullptr;
-    while (temp1 != nullptr) {
+    while (temp1 != nullptr)
+    {
         temp2 = temp1;
         temp1 =  temp1->next;
         if (temp1->x == x)
@@ -281,7 +303,7 @@ linkedList:: set linkedList:: set:: difference(const set &b) //разность 
                 temp_b = temp_b->next; //иначе ищем дальше
             }
             if (flag != 1)
-                c.addElemToSet(temp_a->x);//добавить элемент во множество С
+                c.addElemToSet(temp_a->x); //добавить элемент во множество С
             temp_a = temp_a->next; //идем к следующему элементу
         }
     }
@@ -307,15 +329,8 @@ void linkedList:: set:: print() const
 
 void linkedList:: set:: makenull()
 {
-    node *temp1;
-    node *temp2 = head;
-    while (temp2 != nullptr)
-    {
-        temp1 = temp2;
-        temp2 = temp2->next;
-        delete temp1;
-    }
-    head = nullptr;
+    if (head != nullptr)
+        delList(head);
 }
 
 int linkedList:: set:: min() const
@@ -364,30 +379,99 @@ linkedList:: set& linkedList:: set:: merge(const set &b)
     return *this;
 }
 
-//linkedList:: set& linkedList:: set:: find(const set &b, int x) const
-//{
-//
-//}
+linkedList:: set& linkedList:: set:: find(set &b, int x)  //поиск элемента x в мн-вах this и b. Возвращаем ссылку на множество, в котором находится элемент или ссылку фиктивного пустого множества
+{
+    if (searchPrevByValue(x) != nullptr)
+        return *this;
+    if (b.searchPrevByValue(x) != nullptr)
+        return b;
+    
+    return fake_set;
+}
 
-//bool linkedList:: set:: equal(const set &b) const
-//{
-//
-//}
+int linkedList:: set:: power(node *hd) const //мощность мн-ва
+{
+    node *temp = hd;
+    int pwr = 0;
+    while (temp != nullptr)
+        pwr++;
+    return pwr;
+}
 
-//bool linkedList:: set:: member(int x) const
-//{
-//
-//}
+bool linkedList:: set:: itemCheck(node *hd1, node *hd2) const
+{
+    node *temp1 = hd1;
+    node *temp2 = hd2;
+    while (temp1 != nullptr)
+    {
+        temp2 = hd2;
+        while (temp2 != nullptr)
+        {
+            if (temp1->x != temp2->x) //нашли несовпавшие элементы
+                return false;
+            temp2 = temp2->next;
+        }
+        temp1 = temp1->next;
+    }
+    return true;
+}
 
-//linkedList:: set& linkedList:: set:: assign(const set &b)
-//{
-//
-//}
+bool linkedList:: set:: equal(const set &b) const
+{
+    if (this == &b) //проверка указателей
+        return true;
+    
+    if (head == nullptr && b.head == nullptr) //оба пустых
+        return true;
+    
+    if (head == nullptr || b.head == nullptr) //проверка, если одно пустое другое нет (прошли прошлую проверку)
+        return false;
+    
+    //1) проверка мощностей множеств
+    int pwr1 = power(head);
+    int pwr2 = power(b.head);
+    
+    if (pwr1 != pwr2) //мощности не равны
+        return false;
+    
+    //2) если мощности совпали -> поэлементная проверка
+    return itemCheck(head, b.head);
+}
 
-//bool linkedList:: set:: checkIntersectability() const
-//{
-//
-//}
+bool linkedList:: set:: member(int x) const
+{
+    if (head != nullptr) //если не пустое мн-во
+    {
+        if (head->x == x) //проверка голов
+            return true;
+        
+        return searchPrevByValue(x) != nullptr;
+    }
+    return false;
+}
+
+linkedList:: set& linkedList:: set:: assign(const set &b)
+{
+    *this = b;
+    return *this;
+}
+
+bool linkedList:: set:: checkIntersectability(const set &b) const //проверка мн-в на пересекаемость
+{
+    if (head == nullptr || b.head == nullptr) //если одно из множеств пустое - возвращаем истину т.к. пустое мн-во является подмножеством любого множества
+        return true;
+    
+    if (head->x == b.head->x) //проверка голов
+        return true; //совпадение первых элементов мн-в
+    
+    node *temp = head->next;
+    while (temp != nullptr)
+    {
+        if (b.searchPrevByValue(temp->x) != nullptr)
+            return true;
+    }
+    return false;
+}
 
 
 
