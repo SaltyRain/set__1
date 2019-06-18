@@ -42,11 +42,12 @@ void circleList:: set:: copy(set &to, const set &from)
     }
 }
 
-void circleList:: set:: delList(node *tl)
-{
-    if (tl != nullptr)
+circleList::node* circleList:: set:: delList(node *tl)
+{ //
+    if (tl != nullptr) //лишняя проверка
     {
-        node *temp1;
+        
+        node *temp1 = tl->next;
         node *temp2 = tl->next;
         while (temp2 != tl)
         {
@@ -55,8 +56,8 @@ void circleList:: set:: delList(node *tl)
             delete temp1;
         }
         delete temp2;
-        tl = nullptr;
     }
+    return nullptr;
 }
 
 circleList:: set:: set(const set &s)
@@ -481,7 +482,8 @@ circleList:: set circleList:: set:: difference(const set &b) //разность 
 
 void circleList:: set:: makenull()
 {
-    delList(tail);
+    if (tail != nullptr)
+        tail = delList(tail);
 }
 
 bool circleList:: set:: empty() const

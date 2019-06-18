@@ -19,8 +19,9 @@
 
 using namespace std;
 
+using namespace binaryMassiv;
 //using namespace linkedList;
-using namespace circleList;
+//using namespace circleList;
 
 void readSetFromFile (const char *filename, set &setName)
 {
@@ -112,7 +113,7 @@ void menu(set& setName)
 
 
 int main(int argc, const char * argv[]) {
-    set A, B;
+//    set A, B;
 //    insertElem(A);
 //    cout << "A = ";
 //    A.print();
@@ -121,31 +122,31 @@ int main(int argc, const char * argv[]) {
 //    cout << "B = ";
 //    B.print();
     
-    readSetFromFile("A.txt", A);
-    readSetFromFile("B.txt", B);
-
-    cout << "A = ";
-    A.print();
-
-    cout << "B = ";
-    B.print();
-    
-    
-    set C = A;
-    cout << "C = ";
-    C.print();
-    
-    set U = A.unite(B);
-    cout << "U(объединение) = ";
-    U.print();
-
-    set I = A.intersection(B);
-    cout << "I(пересечение) = ";
-    I.print();
-
-    set D = A.difference(B);
-    cout << "D(разность) = ";
-    D.print();
+//    readSetFromFile("A.txt", A);
+//    readSetFromFile("B.txt", B);
+//
+//    cout << "A = ";
+//    A.print();
+//
+//    cout << "B = ";
+//    B.print();
+//
+//
+//    set C = A;
+//    cout << "C = ";
+//    C.print();
+//
+//    set U = A.unite(B);
+//    cout << "U(объединение) = ";
+//    U.print();
+//
+//    set I = A.intersection(B);
+//    cout << "I(пересечение) = ";
+//    I.print();
+//
+//    set D = A.difference(B);
+//    cout << "D(разность) = ";
+//    D.print();
     
 //
 //    cout << "min A = " << A.min() << endl;
@@ -185,5 +186,8 @@ int main(int argc, const char * argv[]) {
 //    A.makenull();
 //    cout << "A = ";
 //    A.print();
+    
+    
+    set A(63, 68);
 }
 

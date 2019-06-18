@@ -44,22 +44,50 @@ void binaryMassiv:: set:: assignBorders(int border1, int border2)
 //        return rng;
 //    }
 
+int binaryMassiv:: set:: countBorder(int border_value)
+{
+    int v = border_value / 32;
+    if (v % 32 != 0)
+        v++;
+    return v;
+}
+
 binaryMassiv:: set:: set(int border1, int border2)
 {
-    assignBorders(border1, border2);
-    double range = right_border - left_border + 1;
-    elem_numbers = ceil(range/32);
-    std::cout << elem_numbers << std::endl;
-    arr = new int[elem_numbers];
-    // заполнение массива нулями
-    //НЕПРАВИЛЬНО! нулями должны заполняться байты, а не сами значения массива
-    //ПРАВИЛЬНО!! если нулями заполнить значения, то и байты заполняются нулями
-    for (int i = 0; i < elem_numbers; i++)
+    assignBorders(border1, border2); //определили, какая граница большая какая меньшая
+    int v1 = countBorder(left_border);
+    int v2 = countBorder(right_border);
+    
+    int range = abs(v2) - abs(v1) + 1; //+1 потому что массив с нуля
+    arr = new int[range];
+    
+    for (int i = 0; i < range; i++)
     {
         arr[i] = 0;
         std::cout << arr[i];
     }
     std::cout << std::endl;
+    
+    
+//    if (right_border + left_border < 0) //если обе границы отрицательные
+//    {
+//        //если остаток от деления границы на 32 не равен 0. То есть если она не кратна 0, то добавляем ячейку
+//        if (right_border % 32 != 0)
+//            range++;
+//        if (left_border % 32 != 0)
+//            range++;
+//    }
+    
+    
+    
+//    double range = right_border - left_border + 1; // +1 потому что массив с нуля
+//    elem_numbers = ceil(range/32);
+//    std::cout << "кол-во элементов: " << elem_numbers << std::endl;
+//    arr = new int[elem_numbers];
+    // заполнение массива нулями
+    //НЕПРАВИЛЬНО! нулями должны заполняться байты, а не сами значения массива
+    //ПРАВИЛЬНО!! если нулями заполнить значения, то и байты заполняются нулями
+
 }
 
 binaryMassiv:: set:: ~set()
@@ -67,11 +95,11 @@ binaryMassiv:: set:: ~set()
     
 }
 
-int binaryMassiv:: set:: convertToNumber(int x)
+int binaryMassiv:: set:: convertToNumber(int x) const
 {
     return 0;
 }
-int binaryMassiv:: set:: convertToValue(int number)
+int binaryMassiv:: set:: convertToValue(int number) const
 {
     return 0;
 }
@@ -108,19 +136,24 @@ void binaryMassiv:: set:: del(int x)
         arr[item_number] = 0; //удалить
 }
 
-int binaryMassiv:: set:: min()
+int binaryMassiv:: set:: min() const
 {
     int minNumber = 0; //минимальное значение в виде номера массива
     //.. вычисление
     int value = convertToValue(minNumber);
     return value;
 }
-int binaryMassiv:: set:: max()
+int binaryMassiv:: set:: max() const
 {
     int maxNumber = 0; //минимальное значение в виде номера массива
     //.. вычисление
     int value = convertToValue(maxNumber);
     return value;
+}
+
+void binaryMassiv:: set:: print() const
+{
+    
 }
 
 

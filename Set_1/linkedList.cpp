@@ -317,8 +317,9 @@ void linkedList:: set:: print() const
 
 void linkedList:: set:: makenull()
 {
-    if (head != nullptr)
-        delList(head);
+//    if (head != nullptr)
+//        delList(head);
+    
 }
 
 int linkedList:: set:: min() const

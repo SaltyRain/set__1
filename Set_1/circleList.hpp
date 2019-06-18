@@ -75,7 +75,7 @@ namespace circleList {
         bool equalValues(node *tail1, node *tail2) const; //проверка на совпадение значений множеств (разные адреса, одинаковые значения)
         
         void copy(set &to, const set &from);
-        void delList(node *tl); //удалить список
+        node* delList(node *tl); //удалить список
         
     };
 }
